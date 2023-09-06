@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { defineHex, Grid, rectangle,hexToPoint } from 'honeycomb-grid'
 import { SVG } from '@svgdotjs/svg.js'
+import  midiToNote  from './midiToNote.js'
 
 const HexGrid = () => {
     const svgRef = useRef(null);
@@ -27,7 +28,7 @@ const HexGrid = () => {
         }
 
         // Define the hex with the origin set to 'topLeft' for rendering purposes
-        const Hex = defineHex({ dimensions: 70,   origin: { x: -100, y: -100 }, // the center of the hex
+        const Hex = defineHex({ dimensions: 40,   origin: { x: -100, y: -100 }, // the center of the hex
     });
         const grid = new Grid(Hex, rectangle({ width: 9, height: 9 }));
 
