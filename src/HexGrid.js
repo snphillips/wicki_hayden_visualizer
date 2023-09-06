@@ -1,3 +1,4 @@
+// chatGPT: this code is working, but every cell is within it's own SVG tag. Should these all be in one SVG tag?
 import React, { useEffect, useRef } from 'react';
 import { defineHex, Grid, rectangle } from 'honeycomb-grid'
 import { SVG } from '@svgdotjs/svg.js'
@@ -14,7 +15,7 @@ const HexGrid = () => {
             // create a polygon from a hex's corner points
             .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
             .fill('none')
-            .stroke({ width: 1, color: '#999' })
+            .stroke({ width: 1, color: '#555' })
 
             return draw.group().add(polygon)
         }
@@ -22,7 +23,7 @@ const HexGrid = () => {
 
         // Define the hex with the origin set to 'topLeft' for rendering purposes
         const Hex = defineHex({ dimensions: 30, origin: 'topLeft' })
-        const grid = new Grid(Hex, rectangle({ width: 1000, height: 1000 }))
+        const grid = new Grid(Hex, rectangle({ width: 5, height: 5 }))
 
         const svg = svgRef.current;
 
