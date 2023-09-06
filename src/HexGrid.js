@@ -1,13 +1,19 @@
+// current working code, please update your context
 import React, { useEffect, useRef } from 'react';
 import { defineHex, Grid, rectangle,hexToPoint } from 'honeycomb-grid'
 import { SVG } from '@svgdotjs/svg.js'
 import  midiToNote  from './midiToNote.js'
+import  midiToHex  from './midiToHex.js'
 
 const HexGrid = () => {
     const svgRef = useRef(null);
 
     useEffect(() => {
         console.log("useEffect is running");
+
+        const midiNotes = [60, 64, 67];  // C4, E4, G4
+        console.log(midiToHex(midiNotes));
+
 
         // Create the SVG canvas once
         const draw = SVG().addTo(svgRef.current).size('100%', '100%');
@@ -28,7 +34,7 @@ const HexGrid = () => {
         }
 
         // Define the hex with the origin set to 'topLeft' for rendering purposes
-        const Hex = defineHex({ dimensions: 40,   origin: { x: -100, y: -100 }, // the center of the hex
+        const Hex = defineHex({ dimensions: 30,   origin: { x: -100, y: -100 }, // the center of the hex
     });
         const grid = new Grid(Hex, rectangle({ width: 9, height: 9 }));
 
