@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { defineHex, Grid, rectangle } from 'honeycomb-grid'
+import { defineHex, Grid, rectangle,hexToPoint } from 'honeycomb-grid'
 import { SVG } from '@svgdotjs/svg.js'
 
 const HexGrid = () => {
@@ -16,16 +16,25 @@ const HexGrid = () => {
             draw.polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
                 .fill('none')
                 .stroke({ width: 1, color: '#555' });
+            // Add text to display the index
+            const center = hexToPoint(hex);
+            draw.text(`${hex.row},${hex.col}`)
+
+                .move(center.x, center.y)
+                .font({ anchor: 'middle', size: 12, fill: '#000' });
+
+
         }
 
         // Define the hex with the origin set to 'topLeft' for rendering purposes
-        const Hex = defineHex({ dimensions: 50, origin: 'topLeft' });
-        const grid = new Grid(Hex, rectangle({ width: 5, height: 5 }));
+        const Hex = defineHex({ dimensions: 70,   origin: { x: -100, y: -100 }, // the center of the hex
+ });
+        const grid = new Grid(Hex, rectangle({ width: 9, height: 9 }));
 
         grid.forEach(renderSVG);
     }, []);
 
-    return <div ref={svgRef} style={{ width: '800px', height: '600px' }} />;
+    return <div ref={svgRef} style={{ width: '1300px', height: '1200px' }} />;
 };
 
 export default React.memo(HexGrid);
