@@ -6,7 +6,7 @@ const HexGrid = () => {
     const svgRef = useRef(null);
 
     useEffect(() => {
-            console.log("useEffect is running");
+        console.log("useEffect is running");
 
         // Create the SVG canvas once
         const draw = SVG().addTo(svgRef.current).size('100%', '100%');
@@ -14,21 +14,21 @@ const HexGrid = () => {
         function renderSVG(hex) {
             // Create a polygon from a hex's corner points and add it to the existing SVG canvas
             draw.polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
-                .fill('none')
-                .stroke({ width: 1, color: '#555' });
+            .fill('none')
+            .stroke({ width: 1, color: '#555' });
             // Add text to display the index
             const center = hexToPoint(hex);
             draw.text(`${hex.row},${hex.col}`)
 
-                .move(center.x, center.y)
-                .font({ anchor: 'middle', size: 12, fill: '#000' });
+            .move(center.x, center.y)
+            .font({ anchor: 'middle', size: 12, fill: '#000' });
 
 
         }
 
         // Define the hex with the origin set to 'topLeft' for rendering purposes
         const Hex = defineHex({ dimensions: 70,   origin: { x: -100, y: -100 }, // the center of the hex
- });
+    });
         const grid = new Grid(Hex, rectangle({ width: 9, height: 9 }));
 
         grid.forEach(renderSVG);
