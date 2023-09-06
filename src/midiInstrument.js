@@ -32,7 +32,7 @@ class MidiInstrument extends Component {
         this.setState(prevState => ({
             midiMessages: [...prevState.midiMessages, { status, note, velocity }]
         }));
-        console.log('YES')
+        this.props.onMIDIMessage(message);
         // Handle the MIDI message here or pass it to another method
     };
 

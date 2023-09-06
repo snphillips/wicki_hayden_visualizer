@@ -1,18 +1,16 @@
-// current working code, please update your context
+// current code, the SVG is not showing the blue fill when notes arrive
 import React, { useEffect, useRef } from 'react';
 import { defineHex, Grid, rectangle,hexToPoint } from 'honeycomb-grid'
 import { SVG } from '@svgdotjs/svg.js'
 import  midiToNote  from './midiToNote.js'
-import  midiToHex  from './midiToHex.js'
+import { midiToHex, hexToMidiNote } from './midiToHex';
 
-const HexGrid = () => {
+const HexGrid = (props) => {
     const svgRef = useRef(null);
 
     useEffect(() => {
         console.log("useEffect is running");
 
-        const midiNotes = [60, 64, 67];  // C4, E4, G4
-        console.log(midiToHex(midiNotes));
 
 
         // Create the SVG canvas once
@@ -30,6 +28,13 @@ const HexGrid = () => {
             .move(center.x, center.y)
             .font({ anchor: 'middle', size: 12, fill: '#000' });
 
+        // Check if the hex corresponds to an active note
+            console.log(props.activeNotes)
+        if (props.activeNotes.includes(hexToMidiNote(hex))) {
+            // Highlight the hex cell, e.g., change its fill color
+            console.log('BLUE')
+            draw.polygon.fill('blue');
+        }
 
         }
 

@@ -51,8 +51,25 @@ const moveOppositeDirection = (hex, direction) => {
 };
 
 // Example usage:
-const midiNotes = [60, 64, 67];  // C4, E4, G4
-console.log(midiToHex(midiNotes));
+// const midiNotes = [60, 64, 67];  // C4, E4, G4
+// console.log(midiToHex(midiNotes));
 
 
-export default midiToHex
+const  hexToMidiNote = (hex) => {
+    // Assuming middle D (MIDI note number 62) is at { col: 4, row: 4 }
+    const baseMidiNote = 62; 
+
+    // Calculate the offsets from the center hex
+    const colOffset = hex.col - 4;
+    const rowOffset = hex.row - 4;
+
+    // Calculate the MIDI note number based on the offsets and the given constraints
+    const midiNote = baseMidiNote 
+                    + colOffset * 2  // Moving in E direction: 2 semitones
+                    + rowOffset * 7; // Moving in NE direction: 7 semitones
+
+    return midiNote;
+}
+
+
+export { midiToHex, hexToMidiNote };
