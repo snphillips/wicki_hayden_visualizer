@@ -1,36 +1,31 @@
-// chatGPT: this code is working, but every cell is within it's own SVG tag. Should these all be in one SVG tag?
 import React, { useEffect, useRef } from 'react';
 import { defineHex, Grid, rectangle } from 'honeycomb-grid'
 import { SVG } from '@svgdotjs/svg.js'
 
 const HexGrid = () => {
     const svgRef = useRef(null);
+
     useEffect(() => {
+            console.log("useEffect is running");
 
+        // Create the SVG canvas once
+        const draw = SVG().addTo(svgRef.current).size('100%', '100%');
 
-
-        function renderSVG(hex: Hex) {
-            const draw = SVG().addTo('body').size('100%', '100%')
-            const polygon = draw
-            // create a polygon from a hex's corner points
-            .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
-            .fill('none')
-            .stroke({ width: 1, color: '#555' })
-
-            return draw.group().add(polygon)
+        function renderSVG(hex) {
+            // Create a polygon from a hex's corner points and add it to the existing SVG canvas
+            draw.polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
+                .fill('none')
+                .stroke({ width: 1, color: '#555' });
         }
 
-
         // Define the hex with the origin set to 'topLeft' for rendering purposes
-        const Hex = defineHex({ dimensions: 30, origin: 'topLeft' })
-        const grid = new Grid(Hex, rectangle({ width: 5, height: 5 }))
-
-        const svg = svgRef.current;
+        const Hex = defineHex({ dimensions: 50, origin: 'topLeft' });
+        const grid = new Grid(Hex, rectangle({ width: 5, height: 5 }));
 
         grid.forEach(renderSVG);
     }, []);
 
-    return <svg ref={svgRef} width="800" height="600" />;
+    return <div ref={svgRef} style={{ width: '800px', height: '600px' }} />;
 };
 
-export default HexGrid;
+export default React.memo(HexGrid);
