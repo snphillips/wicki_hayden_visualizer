@@ -1,4 +1,5 @@
-const midiToHex = (midiNotes) => {
+//rewrite midiToHex function to accept a single midi note, and return it's hex 
+const midiToHex = (midiNote) => {
     const startMidiNote = 62;  // Middle D
     const startHex = { col: 4, row: 4 };
     const directions = {
@@ -7,30 +8,26 @@ const midiToHex = (midiNotes) => {
         NW: 5   // perfect 4th
     };
 
-    const mapping = {};
+    let difference = midiNote - startMidiNote;
+    let currentHex = { ...startHex };
 
-    for (const note of midiNotes) {
-        let difference = note - startMidiNote;
-        let currentHex = { ...startHex };
-
-        for (const [direction, semitones] of Object.entries(directions)) {
-            while (Math.abs(difference) >= semitones) {
-                if (difference < 0) {
-                    // If the difference is negative, move in the opposite direction
-                    currentHex = moveOppositeDirection(currentHex, direction);
-                    difference += semitones;
-                } else {
-                    currentHex = moveInDirection(currentHex, direction);
-                    difference -= semitones;
-                }
+    for (const [direction, semitones] of Object.entries(directions)) {
+        while (Math.abs(difference) >= semitones) {
+            if (difference < 0) {
+                // If the difference is negative, move in the opposite direction
+                currentHex = moveOppositeDirection(currentHex, direction);
+                difference += semitones;
+            } else {
+                currentHex = moveInDirection(currentHex, direction);
+                difference -= semitones;
             }
         }
-
-        mapping[note] = currentHex;
     }
 
-    return mapping;
+    return currentHex;
 };
+
+// Assuming moveInDirection and moveOppositeDirection functions are defined elsewhere in your code.
 
 const moveInDirection = (hex, direction) => {
     switch (direction) {
