@@ -1,62 +1,55 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
-class MidiInstrument extends Component {
-    state = {
-        midiSupported: false,
-        midiMessages: []
-    };
+const MidiInstrument = ({ onMIDIMessage }) => {
+    const [midiSupported, setMidiSupported] = useState(false);
+    const [midiMessages, setMidiMessages] = useState([]);
 
-    componentDidMount() {
+    useEffect(() => {
         if (navigator.requestMIDIAccess) {
-            this.setState({ midiSupported: true });
+            setMidiSupported(true);
             navigator.requestMIDIAccess({ sysex: true })
-                .then(this.onMIDISuccess, this.onMIDIFailure);
+                .then(onMIDISuccess, onMIDIFailure);
         } else {
             console.log('WebMIDI is not supported in this browser.');
         }
-    }
 
-    onMIDISuccess = (midiAccess) => {
-        const inputs = midiAccess.inputs.values();
-        for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
-            input.value.onmidimessage = this.onMIDIMessage;
+        function onMIDISuccess(midiAccess) {
+            const inputs = midiAccess.inputs.values();
+            for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
+                input.value.onmidimessage = handleMIDIMessage;
+            }
         }
-    };
 
-    onMIDIFailure = (error) => {
-        console.error('Could not access your MIDI devices.', error);
-    };
+        function onMIDIFailure(error) {
+            console.error('Could not access your MIDI devices.', error);
+        }
 
-    onMIDIMessage = (message) => {
-        let [status, note, velocity] = message.data;
-        this.setState(prevState => ({
-            midiMessages: [...prevState.midiMessages, { status, note, velocity }]
-        }));
-        this.props.onMIDIMessage(message);
-        // Handle the MIDI message here or pass it to another method
-    };
+        function handleMIDIMessage(message) {
+            let [status, note, velocity] = message.data;
+            setMidiMessages(prevMessages => [...prevMessages, { status, note, velocity }]);
+            onMIDIMessage(message);
+        }
+    }, [onMIDIMessage]);
 
-    render() {
-        return (
-            <div>
-                <h2>MIDI Instrument</h2>
-                {this.state.midiSupported ? (
-                    <div>
-                        <p>MIDI is supported in this browser.</p>
-                        <ul>
-                            {this.state.midiMessages.map((msg, index) => (
-                                <li key={index}>
-                                    Status: {msg.status}, Note: {msg.note}, Velocity: {msg.velocity}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ) : (
-                    <p>MIDI is not supported in this browser.</p>
-                )}
-            </div>
-        );
-    }
-}
+    return (
+        <div>
+            <h2>MIDI Instrument</h2>
+            {midiSupported ? (
+                <div>
+                    <p>MIDI is supported in this browser.</p>
+                    <ul>
+                        {midiMessages.map((msg, index) => (
+                            <li key={index}>
+                                Status: {msg.status}, Note: {msg.note}, Velocity: {msg.velocity}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <p>MIDI is not supported in this browser.</p>
+            )}
+        </div>
+    );
+};
 
 export default MidiInstrument;
