@@ -54,9 +54,7 @@ const moveOppositeDirection = (hex, direction) => {
 // console.log(midiToHex(midiNotes));
 
 const  hexToMidiNote = (hex) => {
-    // console.log(`hex: ${hex.col}`)
-    // Assuming middle D (MIDI note number 62) is at { col: 4, row: 4 }
-    const baseMidiNote = 62; 
+    // Assuming middle D (MIDI note number 50) is at { col: 4, row: 4 }
 
     // Calculate the offsets from the center hex
     const colOffset = hex.col - 4;

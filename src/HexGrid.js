@@ -47,7 +47,7 @@ useEffect(() => {
 
         if (hexPolygon && hexPolygon.length > 0) {
             if (props.activeNotes.includes(midiNote)) {
-                hexPolygon.fill('blue');
+                hexPolygon.fill('#8ED1FC');
             } else {
                 hexPolygon.fill('none'); // or 'white' if you want them to be white
             }
