@@ -19,7 +19,7 @@ if ((status >= 0x90 && velocity === 0) || (status >= 0x80 && status < 0x90)) {
 
         setActiveNotes(prevNotes => prevNotes.filter(n => n !== note));  
     }
-    if (velocity>0) {
+    else {
     // setActiveNotes(prevNotes => prevNotes.filter(n => n !== note));
         setActiveNotes(prevNotes => [... new Set( [...prevNotes, note] )]);  
     // setActiveNotes(prevNotes => [...prevNotes, note]);  
