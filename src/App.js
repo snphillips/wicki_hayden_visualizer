@@ -6,21 +6,32 @@ import MidiInstrument from './midiInstrument';
 import HexGrid from './HexGrid';
 
 const App = () => {
-    const [activeNotes, setActiveNotes] = useState([]);
+  const [activeNotes, setActiveNotes] = useState([]);
 
-    const handleMIDIMessage = (message) => {
+  const onMIDIMessage = (message) => {
         // ... your existing MIDI message handling logic
         // For example, if a note-on message is received:
-        setActiveNotes(prevNotes => [...prevNotes, message.note]);
         // For a note-off message:
-        // setActiveNotes(prevNotes => prevNotes.filter(n => n !== message.note));
-    };
+    let [status, note, velocity] = message;
+    console.log(`note: ${note}`)
 
-    return (
-        <div>
-            <MidiInstrument onMIDIMessage={handleMIDIMessage} />
-            <HexGrid activeNotes={activeNotes} />
-        </div>
+    if (velocity==0) {
+
+        setActiveNotes(prevNotes => prevNotes.filter(n => n !== note));  
+    }
+    if (velocity>0) {
+    // setActiveNotes(prevNotes => prevNotes.filter(n => n !== note));
+        setActiveNotes(prevNotes => [... new Set( [...prevNotes, note] )]);  
+    // setActiveNotes(prevNotes => [...prevNotes, note]);  
+      
+    }
+  };
+
+  return (
+    <div>
+    <MidiInstrument onMIDIMessage={onMIDIMessage} />
+    <HexGrid activeNotes={activeNotes} />
+    </div>
     );
 };
 

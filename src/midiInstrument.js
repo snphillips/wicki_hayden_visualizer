@@ -26,8 +26,8 @@ const MidiInstrument = ({ onMIDIMessage }) => {
 
         function handleMIDIMessage(message) {
             let [status, note, velocity] = message.data;
-            setMidiMessages(prevMessages => [...prevMessages, { status, note, velocity }]);
-            onMIDIMessage(message);
+
+            onMIDIMessage(message.data);
         }
     }, [onMIDIMessage]);
 
@@ -37,13 +37,6 @@ const MidiInstrument = ({ onMIDIMessage }) => {
             {midiSupported ? (
                 <div>
                     <p>MIDI is supported in this browser.</p>
-                    <ul>
-                        {midiMessages.map((msg, index) => (
-                            <li key={index}>
-                                Status: {msg.status}, Note: {msg.note}, Velocity: {msg.velocity}
-                            </li>
-                        ))}
-                    </ul>
                 </div>
             ) : (
                 <p>MIDI is not supported in this browser.</p>
