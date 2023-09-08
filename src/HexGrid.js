@@ -39,25 +39,21 @@ const HexGrid = (props) => {
         }, []);
 
     // Update fill color of hexagons when props.activeNotes changes
-    useEffect(() => {
-        console.log("useEffect for updating fill color is running");
+// Update fill color of hexagons based on props.activeNotes
+useEffect(() => {
+    gridRef.current.forEach(hex => {
+        const midiNote = hexToMidiNote(hex);
+        const hexPolygon = drawRef.current.find(`polygon[data-row="${hex.row}"][data-col="${hex.col}"]`);
 
-        props.activeNotes.forEach(note => {
-
-
-            const hex = midiToHex(note);
-            const hexPolygon = drawRef.current.find(`polygon[data-row="${hex.row}"][data-col="${hex.col}"]`);
-            console.log(`Hex [${hex.row}, ${hex.col}] -> Polygon:`, hexPolygon);
-
-            if (hexPolygon) {
+        if (hexPolygon && hexPolygon.length > 0) {
+            if (props.activeNotes.includes(midiNote)) {
                 hexPolygon.fill('blue');
+            } else {
+                hexPolygon.fill('none'); // or 'white' if you want them to be white
             }
-        });
-
-    // Reset other hexagons to their default fill (optional)
-    // ... 
-
-    }, [props.activeNotes]);
+        }
+    });
+}, [props.activeNotes]);
 
     return <div ref={svgRef} style={{ width: '1300px', height: '1200px' }} />;
 };
