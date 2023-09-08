@@ -19,7 +19,7 @@ const HexGrid = (props) => {
 
         // Add text to display the index
             const center = hexToPoint(hex);
-            drawRef.current.text(`${hex.row},${hex.col}`)
+            drawRef.current.text(`${hex.col},${hex.row}`)
             .move(center.x, center.y)
             .font({ anchor: 'middle', size: 12, fill: '#000' });
     }
