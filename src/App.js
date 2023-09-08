@@ -13,9 +13,9 @@ const App = () => {
         // For example, if a note-on message is received:
         // For a note-off message:
     let [status, note, velocity] = message;
-    console.log(`note: ${note}`)
+    // console.log(`note: ${note },  velocity: ${velocity}`)
 
-    if (velocity==0) {
+if ((status >= 0x90 && velocity === 0) || (status >= 0x80 && status < 0x90)) {
 
         setActiveNotes(prevNotes => prevNotes.filter(n => n !== note));  
     }
@@ -25,6 +25,7 @@ const App = () => {
     // setActiveNotes(prevNotes => [...prevNotes, note]);  
       
     }
+
   };
 
   return (

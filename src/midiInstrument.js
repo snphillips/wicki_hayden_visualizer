@@ -26,8 +26,11 @@ const MidiInstrument = ({ onMIDIMessage }) => {
 
         function handleMIDIMessage(message) {
             let [status, note, velocity] = message.data;
+                if (note) {
+                onMIDIMessage(message.data);
+                console.log(`status: ${status}, note: ${note },  velocity: ${velocity}`)
 
-            onMIDIMessage(message.data);
+                }
         }
     }, [onMIDIMessage]);
 

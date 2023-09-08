@@ -63,7 +63,7 @@ const  hexToMidiNote = (hex) => {
     const rowOffset = hex.row - 4;
 
 
-    return litteralMap[`${hex.col},${hex.row}`];
+    return litteralMap[`${hex.col},${hex.row-2}`];
 }
 
 
@@ -197,8 +197,8 @@ const generateHexToMidiMapping = (width, height) => {
     return mapping;
 };
 
-const hexToMidiMapping = generateHexToMidiMapping(10, 10); // Adjust width and height as needed
-console.log(hexToMidiMapping);
+// const hexToMidiMapping = generateHexToMidiMapping(10, 10); // Adjust width and height as needed
+// console.log(hexToMidiMapping);
 
 
 
