@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react"
 import { defineHex, Grid, rectangle, hexToPoint } from "honeycomb-grid"
 import { SVG } from "@svgdotjs/svg.js"
 import midiToNote from "./midiToNote.js"
-import { midiToHex, hexToMidiNote } from "./midiToHex"
+import {  hexToMidiNote } from "./midiToHex"
 
 const HexGrid = (props) => {
     const svgRef = useRef(null)
