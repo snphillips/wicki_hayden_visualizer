@@ -53,7 +53,7 @@ const HexGrid = (props) => {
 
             if (hexPolygon && hexPolygon.length > 0) {
                 if (props.activeNotes.includes(midiNote)) {
-                    hexPolygon.fill("#8ED1FC")
+                    hexPolygon.fill("#b3e87d")
                 } else {
                     hexPolygon.fill("none") // or 'white' if you want them to be white
                 }
