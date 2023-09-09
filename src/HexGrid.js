@@ -16,7 +16,7 @@ const HexGrid = (props) => {
         const hexPolygon = drawRef.current
             .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
             .fill("none")
-            .stroke({ width: 2, color: "#b3b3b3" })
+            .stroke({ width: 3, color: "#b3b3b3" })
             .data("row", hex.row) // Add data-row attribute
             .data("col", hex.col) // Add data-col attribute
 
@@ -25,8 +25,8 @@ const HexGrid = (props) => {
         drawRef.current
             // .text(`${hex.col},${hex.row}`)
             .text(`${noteName}`)
-            .move(center.x, center.y)
-            .font({ anchor: "middle", size: 12, fill: "#000" })
+            .move(center.x, center.y-8)
+            .font({ anchor: "middle", size: 14, fill: "#000" })
             .stroke({ color: "#b3b3b3" })
     }
 
@@ -62,7 +62,7 @@ const HexGrid = (props) => {
         })
     }, [props.activeNotes])
 
-    return <div ref={svgRef} style={{ width: "1300px", height: "1200px" }} />
+    return <div ref={svgRef} style={{ width: "1300px", height: "1200px" ,margin: '0 auto'}} />
 }
 
 export default React.memo(HexGrid)
