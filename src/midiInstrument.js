@@ -40,14 +40,6 @@ const MidiInstrument = ({ onMIDIMessage }) => {
 
     return (
         <div>
-            <h2>MIDI Instrument</h2>
-            {midiSupported ? (
-                <div>
-                    <p>MIDI is supported in this browser.</p>
-                </div>
-            ) : (
-                <p>MIDI is not supported in this browser.</p>
-            )}
         </div>
     )
 }
