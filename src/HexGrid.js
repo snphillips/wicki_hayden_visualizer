@@ -16,7 +16,7 @@ const HexGrid = (props) => {
         const hexPolygon = drawRef.current
             .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
             .fill("none")
-            .stroke({ width: 1, color: "#b3b3b3" })
+            .stroke({ width: 2, color: "#b3b3b3" })
             .data("row", hex.row) // Add data-row attribute
             .data("col", hex.col) // Add data-col attribute
 
@@ -43,7 +43,7 @@ const HexGrid = (props) => {
         gridRef.current.forEach(renderSVG)
     }, [])
 
-    // Update fill color of hexagons when props.activeNotes changes
+    // Update fill color odf hexagons when props.activeNotes changes
     // Update fill color of hexagons based on props.activeNotes
     useEffect(() => {
         gridRef.current.forEach((hex) => {
