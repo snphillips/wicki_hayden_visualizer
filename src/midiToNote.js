@@ -121,4 +121,4 @@ const midiToNote = {
 // Usage example:
 // console.log(midiToNote[60]) // Outputs: C4
 
-export default { midiToNote }
+export default midiToNote

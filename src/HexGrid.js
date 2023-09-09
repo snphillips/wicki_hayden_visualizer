@@ -10,6 +10,8 @@ const HexGrid = (props) => {
     const gridRef = useRef() // Use useRef to persist grid across re-renders
     const drawRef = useRef() // Use useRef to persist draw across re-renders
     function renderSVG(hex) {
+        const midiNote = hexToMidiNote(hex)
+        const noteName = midiToNote[Number(midiNote)]
         // Create a polygon from a hex's corner points and add it to the existing SVG canvas
         const hexPolygon = drawRef.current
             .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
@@ -21,7 +23,8 @@ const HexGrid = (props) => {
         // Add text to display the index
         const center = hexToPoint(hex)
         drawRef.current
-            .text(`${hex.col},${hex.row}`)
+            // .text(`${hex.col},${hex.row}`)
+            .text(`${noteName}`)
             .move(center.x, center.y)
             .font({ anchor: "middle", size: 12, fill: "#000" })
     }
