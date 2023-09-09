@@ -27,8 +27,7 @@ const HexGrid = (props) => {
             .text(`${noteName}`)
             .move(center.x, center.y)
             .font({ anchor: "middle", size: 12, fill: "#000" })
-                        .stroke({ color: "#b3b3b3" })
-
+            .stroke({ color: "#b3b3b3" })
     }
 
     useEffect(() => {
