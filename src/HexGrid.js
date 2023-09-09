@@ -32,7 +32,7 @@ const HexGrid = (props) => {
 
 
         // Define the hex with the origin set to 'topLeft' for rendering purposes
-            const Hex = defineHex({ dimensions: 30, origin: { x: -100, y: -100 } });
+            const Hex = defineHex({ dimensions: 50, origin: { x: -100, y: -100 } });
             gridRef.current = new Grid(Hex, rectangle({ width: 9, height: 9 }));
 
             gridRef.current.forEach(renderSVG);

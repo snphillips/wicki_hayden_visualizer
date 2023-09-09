@@ -61,7 +61,7 @@ const  hexToMidiNote = (hex) => {
     const rowOffset = hex.row - 4;
 
 
-    return litteralMap[`${hex.col},${hex.row-2}`];
+    return litteralMap[`${hex.col},${hex.row}`]+12;
 }
 
 
