@@ -16,7 +16,7 @@ const HexGrid = (props) => {
         const hexPolygon = drawRef.current
             .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
             .fill("none")
-            .stroke({ width: 1, color: "#555" })
+            .stroke({ width: 1, color: "#b3b3b3" })
             .data("row", hex.row) // Add data-row attribute
             .data("col", hex.col) // Add data-col attribute
 
@@ -27,6 +27,8 @@ const HexGrid = (props) => {
             .text(`${noteName}`)
             .move(center.x, center.y)
             .font({ anchor: "middle", size: 12, fill: "#000" })
+                        .stroke({ color: "#b3b3b3" })
+
     }
 
     useEffect(() => {
