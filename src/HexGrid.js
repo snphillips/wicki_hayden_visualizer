@@ -1,61 +1,64 @@
 // lates HexGrid.js
-import React, { useEffect, useRef } from 'react';
-import { defineHex, Grid, rectangle, hexToPoint } from 'honeycomb-grid';
-import { SVG } from '@svgdotjs/svg.js';
-import midiToNote from './midiToNote.js';
-import { midiToHex, hexToMidiNote } from './midiToHex';
+import React, { useEffect, useRef } from "react"
+import { defineHex, Grid, rectangle, hexToPoint } from "honeycomb-grid"
+import { SVG } from "@svgdotjs/svg.js"
+import midiToNote from "./midiToNote.js"
+import { midiToHex, hexToMidiNote } from "./midiToHex"
 
 const HexGrid = (props) => {
-    const svgRef = useRef(null);
-    const gridRef = useRef(); // Use useRef to persist grid across re-renders
-    const drawRef = useRef(); // Use useRef to persist draw across re-renders
+    const svgRef = useRef(null)
+    const gridRef = useRef() // Use useRef to persist grid across re-renders
+    const drawRef = useRef() // Use useRef to persist draw across re-renders
     function renderSVG(hex) {
         // Create a polygon from a hex's corner points and add it to the existing SVG canvas
-        const hexPolygon = drawRef.current.polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
-        .fill('none')
-        .stroke({ width: 1, color: '#555' })
-            .data('row', hex.row) // Add data-row attribute
-            .data('col', hex.col); // Add data-col attribute
+        const hexPolygon = drawRef.current
+            .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
+            .fill("none")
+            .stroke({ width: 1, color: "#555" })
+            .data("row", hex.row) // Add data-row attribute
+            .data("col", hex.col) // Add data-col attribute
 
         // Add text to display the index
-            const center = hexToPoint(hex);
-            drawRef.current.text(`${hex.col},${hex.row}`)
+        const center = hexToPoint(hex)
+        drawRef.current
+            .text(`${hex.col},${hex.row}`)
             .move(center.x, center.y)
-            .font({ anchor: 'middle', size: 12, fill: '#000' });
+            .font({ anchor: "middle", size: 12, fill: "#000" })
     }
 
     useEffect(() => {
-        console.log("useEffect is running");
+        console.log("useEffect is running")
 
         // Create the SVG canvas once
-        drawRef.current = SVG().addTo(svgRef.current).size('100%', '100%');
-
+        drawRef.current = SVG().addTo(svgRef.current).size("100%", "100%")
 
         // Define the hex with the origin set to 'topLeft' for rendering purposes
-            const Hex = defineHex({ dimensions: 50, origin: { x: -100, y: -100 } });
-            gridRef.current = new Grid(Hex, rectangle({ width: 9, height: 9 }));
+        const Hex = defineHex({ dimensions: 50, origin: { x: -100, y: -100 } })
+        gridRef.current = new Grid(Hex, rectangle({ width: 9, height: 9 }))
 
-            gridRef.current.forEach(renderSVG);
-        }, []);
+        gridRef.current.forEach(renderSVG)
+    }, [])
 
     // Update fill color of hexagons when props.activeNotes changes
-// Update fill color of hexagons based on props.activeNotes
-useEffect(() => {
-    gridRef.current.forEach(hex => {
-        const midiNote = hexToMidiNote(hex);
-        const hexPolygon = drawRef.current.find(`polygon[data-row="${hex.row}"][data-col="${hex.col}"]`);
+    // Update fill color of hexagons based on props.activeNotes
+    useEffect(() => {
+        gridRef.current.forEach((hex) => {
+            const midiNote = hexToMidiNote(hex)
+            const hexPolygon = drawRef.current.find(
+                `polygon[data-row="${hex.row}"][data-col="${hex.col}"]`
+            )
 
-        if (hexPolygon && hexPolygon.length > 0) {
-            if (props.activeNotes.includes(midiNote)) {
-                hexPolygon.fill('#8ED1FC');
-            } else {
-                hexPolygon.fill('none'); // or 'white' if you want them to be white
+            if (hexPolygon && hexPolygon.length > 0) {
+                if (props.activeNotes.includes(midiNote)) {
+                    hexPolygon.fill("#8ED1FC")
+                } else {
+                    hexPolygon.fill("none") // or 'white' if you want them to be white
+                }
             }
-        }
-    });
-}, [props.activeNotes]);
+        })
+    }, [props.activeNotes])
 
-    return <div ref={svgRef} style={{ width: '1300px', height: '1200px' }} />;
-};
+    return <div ref={svgRef} style={{ width: "1300px", height: "1200px" }} />
+}
 
-export default React.memo(HexGrid);
+export default React.memo(HexGrid)
