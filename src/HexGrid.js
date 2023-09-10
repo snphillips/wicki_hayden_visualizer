@@ -1,9 +1,14 @@
-// lates HexGrid.js
 import React, { useEffect, useRef } from "react"
 import { defineHex, Grid, rectangle, hexToPoint } from "honeycomb-grid"
 import { SVG } from "@svgdotjs/svg.js"
 import midiToNote from "./midiToNote.js"
 import { hexToMidiNote } from "./midiToHex"
+
+// Color literals extracted to constants
+const HEX_FILL_COLOR = '#f2f2f2';
+const HEX_STROKE_COLOR = '#b3b3b3';
+const HEX_ACTIVE_FILL_COLOR = '#b3e87d';
+const TEXT_FILL_COLOR = '#000';
 
 const HexGrid = (props) => {
     const svgRef = useRef(null)
@@ -15,19 +20,18 @@ const HexGrid = (props) => {
         // Create a polygon from a hex's corner points and add it to the existing SVG canvas
         const hexPolygon = drawRef.current
             .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
-            .fill("none")
-            .stroke({ width: 3, color: "#b3b3b3" })
+            .fill(HEX_FILL_COLOR)
+            .stroke({ width: 3, color: HEX_STROKE_COLOR })
             .data("row", hex.row) // Add data-row attribute
             .data("col", hex.col) // Add data-col attribute
 
         // Add text to display the index
         const center = hexToPoint(hex)
         drawRef.current
-            // .text(`${hex.col},${hex.row}`)
             .text(`${noteName}`)
             .move(center.x, center.y-8)
-            .font({ anchor: "middle", size: 14, fill: "#000" })
-            .stroke({ color: "#b3b3b3" })
+            .font({ anchor: "middle", size: 14, fill: TEXT_FILL_COLOR })
+            .stroke({ color: HEX_STROKE_COLOR })
     }
 
     useEffect(() => {
@@ -43,7 +47,6 @@ const HexGrid = (props) => {
         gridRef.current.forEach(renderSVG)
     }, [])
 
-    // Update fill color odf hexagons when props.activeNotes changes
     // Update fill color of hexagons based on props.activeNotes
     useEffect(() => {
         gridRef.current.forEach((hex) => {
@@ -54,9 +57,9 @@ const HexGrid = (props) => {
 
             if (hexPolygon && hexPolygon.length > 0) {
                 if (props.activeNotes.includes(midiNote)) {
-                    hexPolygon.fill("#b3e87d")
+                    hexPolygon.fill(HEX_ACTIVE_FILL_COLOR)
                 } else {
-                    hexPolygon.fill("none") // or 'white' if you want them to be white
+                    hexPolygon.fill(HEX_FILL_COLOR)
                 }
             }
         })
