@@ -7,7 +7,244 @@ import {
 } from "honeycomb-grid"
 
 
-
+const midiToHex = {
+    "13": [
+        "0,9"
+    ],
+    "15": [
+        "1,9"
+    ],
+    "17": [
+        "2,9"
+    ],
+    "18": [
+        "0,8"
+    ],
+    "19": [
+        "3,9"
+    ],
+    "20": [
+        "1,8"
+    ],
+    "21": [
+        "4,9"
+    ],
+    "22": [
+        "2,8"
+    ],
+    "23": [
+        "5,9"
+    ],
+    "24": [
+        "3,8"
+    ],
+    "25": [
+        "0,7",
+        "6,9"
+    ],
+    "26": [
+        "4,8"
+    ],
+    "27": [
+        "1,7",
+        "7,9"
+    ],
+    "28": [
+        "5,8"
+    ],
+    "29": [
+        "2,7",
+        "8,9"
+    ],
+    "30": [
+        "0,6",
+        "6,8"
+    ],
+    "31": [
+        "3,7",
+        "9,9"
+    ],
+    "32": [
+        "1,6",
+        "7,8"
+    ],
+    "33": [
+        "4,7"
+    ],
+    "34": [
+        "2,6",
+        "8,8"
+    ],
+    "35": [
+        "5,7"
+    ],
+    "36": [
+        "3,6",
+        "9,8"
+    ],
+    "37": [
+        "0,5",
+        "6,7"
+    ],
+    "38": [
+        "4,6"
+    ],
+    "39": [
+        "1,5",
+        "7,7"
+    ],
+    "40": [
+        "5,6"
+    ],
+    "41": [
+        "2,5",
+        "8,7"
+    ],
+    "42": [
+        "0,4",
+        "6,6"
+    ],
+    "43": [
+        "3,5",
+        "9,7"
+    ],
+    "44": [
+        "1,4",
+        "7,6"
+    ],
+    "45": [
+        "4,5"
+    ],
+    "46": [
+        "2,4",
+        "8,6"
+    ],
+    "47": [
+        "5,5"
+    ],
+    "48": [
+        "3,4",
+        "9,6"
+    ],
+    "49": [
+        "0,3",
+        "6,5"
+    ],
+    "50": [
+        "4,4"
+    ],
+    "51": [
+        "1,3",
+        "7,5"
+    ],
+    "52": [
+        "5,4"
+    ],
+    "53": [
+        "2,3",
+        "8,5"
+    ],
+    "54": [
+        "0,2",
+        "6,4"
+    ],
+    "55": [
+        "3,3",
+        "9,5"
+    ],
+    "56": [
+        "1,2",
+        "7,4"
+    ],
+    "57": [
+        "4,3"
+    ],
+    "58": [
+        "2,2",
+        "8,4"
+    ],
+    "59": [
+        "5,3"
+    ],
+    "60": [
+        "3,2",
+        "9,4"
+    ],
+    "61": [
+        "0,1",
+        "6,3"
+    ],
+    "62": [
+        "4,2"
+    ],
+    "63": [
+        "1,1",
+        "7,3"
+    ],
+    "64": [
+        "5,2"
+    ],
+    "65": [
+        "2,1",
+        "8,3"
+    ],
+    "66": [
+        "0,0",
+        "6,2"
+    ],
+    "67": [
+        "3,1",
+        "9,3"
+    ],
+    "68": [
+        "1,0",
+        "7,2"
+    ],
+    "69": [
+        "4,1"
+    ],
+    "70": [
+        "2,0",
+        "8,2"
+    ],
+    "71": [
+        "5,1"
+    ],
+    "72": [
+        "3,0",
+        "9,2"
+    ],
+    "73": [
+        "6,1"
+    ],
+    "74": [
+        "4,0"
+    ],
+    "75": [
+        "7,1"
+    ],
+    "76": [
+        "5,0"
+    ],
+    "77": [
+        "8,1"
+    ],
+    "78": [
+        "6,0"
+    ],
+    "79": [
+        "9,1"
+    ],
+    "80": [
+        "7,0"
+    ],
+    "82": [
+        "8,0"
+    ],
+    "84": [
+        "9,0"
+    ]
+}
 
 const hexToMidiNote = (hex) => {
     // Assuming middle D (MIDI note number 50) is at { col: 4, row: 4 }
@@ -19,6 +256,7 @@ const hexToMidiNote = (hex) => {
     return litteralMap[`${hex.col},${hex.row}`] + 12
 }
 
+// swap the keys and values of this litteralMap object, each midi note can have many hexkeys
 const litteralMap = {
     "0,0": 66,
     "0,1": 61,
@@ -150,7 +388,29 @@ const generateHexToMidiMapping = (width, height) => {
     return mapping
 }
 
+
+
+function swapKeysAndValues(litteralMap) {
+    const swappedMap = {};
+
+    for (const [hexKey, midiNote] of Object.entries(litteralMap)) {
+        if (!swappedMap[midiNote]) {
+            swappedMap[midiNote] = [];
+        }
+        swappedMap[midiNote].push(hexKey);
+    }
+
+    return swappedMap;
+}
+
+const result = swapKeysAndValues(litteralMap);
+console.log(result);
+
+
+
+
+
 // const hexToMidiMapping = generateHexToMidiMapping(10, 10); // Adjust width and height as needed
 // console.log(hexToMidiMapping);
 
-export {  hexToMidiNote }
+export {  hexToMidiNote,midiToHex }

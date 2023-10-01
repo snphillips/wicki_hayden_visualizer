@@ -6,6 +6,7 @@ import HexGrid from "./HexGrid"
 
 const App = () => {
   const [activeNotes, setActiveNotes] = useState([])
+    const [prevActiveNotes, setPrevActiveNotes] = useState([]);
 
   const onMIDIMessage = (message) => {
     let [status, note, velocity] = message
@@ -22,7 +23,7 @@ const App = () => {
   return (
     <div>
       <MidiInstrument onMIDIMessage={onMIDIMessage} />
-      <HexGrid activeNotes={activeNotes} />
+<HexGrid activeNotes={activeNotes} prevActiveNotes={prevActiveNotes} setPrevActiveNotes={setPrevActiveNotes} />
     </div>
   )
 }

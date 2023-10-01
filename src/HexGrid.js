@@ -3,15 +3,15 @@ import React, { useEffect, useRef } from "react"
 import { defineHex, Grid, rectangle, hexToPoint } from "honeycomb-grid"
 import { SVG } from "@svgdotjs/svg.js"
 import midiToNote from "./midiToNote.js"
-import { hexToMidiNote } from "./midiToHex"
+import { hexToMidiNote, midiToHex } from "./midiToHex"
 
 // Color literals extracted to constants
-const HEX_FILL_COLOR = '#f2f2f2';
-const HEX_STROKE_COLOR = '#b3b3b3';
-const HEX_ACTIVE_FILL_COLOR = '#b3e87d';
-const TEXT_FILL_COLOR = '#000';
+const HEX_FILL_COLOR = "#f2f2f2"
+const HEX_STROKE_COLOR = "#b3b3b3"
+const HEX_ACTIVE_FILL_COLOR = "#b3e87d"
+const TEXT_FILL_COLOR = "#000"
 
-const HexGrid = (props) => {
+const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }) => {
     const svgRef = useRef(null)
     const gridRef = useRef() // Use useRef to persist grid across re-renders
     const drawRef = useRef() // Use useRef to persist draw across re-renders
@@ -30,7 +30,7 @@ const HexGrid = (props) => {
         const center = hexToPoint(hex)
         drawRef.current
             .text(`${noteName}`)
-            .move(center.x, center.y-8)
+            .move(center.x, center.y - 8)
             .font({ anchor: "middle", size: 14, fill: TEXT_FILL_COLOR })
             .stroke({ color: HEX_STROKE_COLOR })
     }
@@ -48,26 +48,48 @@ const HexGrid = (props) => {
         gridRef.current.forEach(renderSVG)
     }, [])
 
-    // Update fill color of hexagons based on props.activeNotes
-    // can the performance of this code be improved using a different approach. 
-    useEffect(() => {
-        gridRef.current.forEach((hex) => {
-            const midiNote = hexToMidiNote(hex)
+useEffect(() => {
+    // Update hexagons corresponding to currently active notes
+    activeNotes.forEach((note) => {
+        const hexes = midiToHex[note];
+        hexes.forEach(hex => {
+            const hexData = hex.split(',')
             const hexPolygon = drawRef.current.find(
-                `polygon[data-row="${hex.row}"][data-col="${hex.col}"]`
+                `polygon[data-row="${hexData[1]}"][data-col="${hexData[0]}"]`
             )
+            if (hexPolygon) {
+                hexPolygon.fill(HEX_ACTIVE_FILL_COLOR)
+            }
+        });
+    })
 
-            if (hexPolygon && hexPolygon.length > 0) {
-                if (props.activeNotes.includes(midiNote)) {
-                    hexPolygon.fill(HEX_ACTIVE_FILL_COLOR)
-                } else {
+    // Reset hexagons corresponding to previously active notes that are no longer active
+    prevActiveNotes.forEach((note) => {
+        if (!activeNotes.includes(note)) {
+            const hexes = midiToHex[note];
+            hexes.forEach(hex => {
+            const hexData = hex.split(',')
+                const hexPolygon = drawRef.current.find(
+                `polygon[data-row="${hexData[1]}"][data-col="${hexData[0]}"]`
+                )
+                if (hexPolygon) {
                     hexPolygon.fill(HEX_FILL_COLOR)
                 }
-            }
-        })
-    }, [props.activeNotes])
+            });
+        }
+    })
 
-    return <div ref={svgRef} style={{ width: "1300px", height: "1200px" ,margin: '0 auto'}} />
+    // Update the previous active notes state
+    setPrevActiveNotes(activeNotes)
+}, [activeNotes])
+
+
+    return (
+        <div
+            ref={svgRef}
+            style={{ width: "1300px", height: "1200px", margin: "0 auto" }}
+        />
+    )
 }
 
 export default React.memo(HexGrid)
