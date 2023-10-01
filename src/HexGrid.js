@@ -49,6 +49,7 @@ const HexGrid = (props) => {
     }, [])
 
     // Update fill color of hexagons based on props.activeNotes
+    // can the performance of this code be improved using a different approach. 
     useEffect(() => {
         gridRef.current.forEach((hex) => {
             const midiNote = hexToMidiNote(hex)
