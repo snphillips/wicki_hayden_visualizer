@@ -150,5 +150,7 @@ const generateHexToMidiMapping = (width, height) => {
     return mapping
 }
 
+// const hexToMidiMapping = generateHexToMidiMapping(10, 10); // Adjust width and height as needed
+// console.log(hexToMidiMapping);
 
 export {  hexToMidiNote }

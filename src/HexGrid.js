@@ -1,3 +1,4 @@
+// latest HexGrid.js
 import React, { useEffect, useRef } from "react"
 import { defineHex, Grid, rectangle, hexToPoint } from "honeycomb-grid"
 import { SVG } from "@svgdotjs/svg.js"
