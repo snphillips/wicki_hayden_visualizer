@@ -48,41 +48,40 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }) => {
         gridRef.current.forEach(renderSVG)
     }, [])
 
-useEffect(() => {
-    // Update hexagons corresponding to currently active notes
-    activeNotes.forEach((note) => {
-        const hexes = midiToHex[note];
-        hexes.forEach(hex => {
-            const hexData = hex.split(',')
-            const hexPolygon = drawRef.current.find(
-                `polygon[data-row="${hexData[1]}"][data-col="${hexData[0]}"]`
-            )
-            if (hexPolygon) {
-                hexPolygon.fill(HEX_ACTIVE_FILL_COLOR)
-            }
-        });
-    })
-
-    // Reset hexagons corresponding to previously active notes that are no longer active
-    prevActiveNotes.forEach((note) => {
-        if (!activeNotes.includes(note)) {
-            const hexes = midiToHex[note];
-            hexes.forEach(hex => {
-            const hexData = hex.split(',')
+    useEffect(() => {
+        // Update hexagons corresponding to currently active notes
+        activeNotes.forEach((note) => {
+            const hexes = midiToHex[note]
+            hexes.forEach((hex) => {
+                const hexData = hex.split(",")
                 const hexPolygon = drawRef.current.find(
-                `polygon[data-row="${hexData[1]}"][data-col="${hexData[0]}"]`
+                    `polygon[data-row="${hexData[1]}"][data-col="${hexData[0]}"]`
                 )
                 if (hexPolygon) {
-                    hexPolygon.fill(HEX_FILL_COLOR)
+                    hexPolygon.fill(HEX_ACTIVE_FILL_COLOR)
                 }
-            });
-        }
-    })
+            })
+        })
 
-    // Update the previous active notes state
-    setPrevActiveNotes(activeNotes)
-}, [activeNotes])
+        // Reset hexagons corresponding to previously active notes that are no longer active
+        prevActiveNotes.forEach((note) => {
+            if (!activeNotes.includes(note)) {
+                const hexes = midiToHex[note]
+                hexes.forEach((hex) => {
+                    const hexData = hex.split(",")
+                    const hexPolygon = drawRef.current.find(
+                        `polygon[data-row="${hexData[1]}"][data-col="${hexData[0]}"]`
+                    )
+                    if (hexPolygon) {
+                        hexPolygon.fill(HEX_FILL_COLOR)
+                    }
+                })
+            }
+        })
 
+        // Update the previous active notes state
+        setPrevActiveNotes(activeNotes)
+    }, [activeNotes])
 
     return (
         <div
