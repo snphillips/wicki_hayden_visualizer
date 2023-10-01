@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react"
 import { defineHex, Grid, rectangle, hexToPoint } from "honeycomb-grid"
 import { SVG } from "@svgdotjs/svg.js"
 import midiToNote from "./midiToNote.js"
-import { hexToMidiNote, midiToHex } from "./midiToHex"
+import { hexToMidiNote, MidiNoteToHex } from "./midiToHex"
 
 // Color literals extracted to constants
 const HEX_FILL_COLOR = "#f2f2f2"
@@ -48,10 +48,11 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }) => {
         gridRef.current.forEach(renderSVG)
     }, [])
 
+    //this is the final working code
     useEffect(() => {
         // Update hexagons corresponding to currently active notes
         activeNotes.forEach((note) => {
-            const hexes = midiToHex[note]
+            const hexes = MidiNoteToHex(note)
             hexes.forEach((hex) => {
                 const hexData = hex.split(",")
                 const hexPolygon = drawRef.current.find(
@@ -66,7 +67,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }) => {
         // Reset hexagons corresponding to previously active notes that are no longer active
         prevActiveNotes.forEach((note) => {
             if (!activeNotes.includes(note)) {
-                const hexes = midiToHex[note]
+                const hexes = MidiNoteToHex(note)
                 hexes.forEach((hex) => {
                     const hexData = hex.split(",")
                     const hexPolygon = drawRef.current.find(
