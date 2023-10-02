@@ -48,7 +48,6 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }) => {
         gridRef.current.forEach(renderSVG)
     }, [])
 
-    //this is the final working code
     useEffect(() => {
         // Update hexagons corresponding to currently active notes
         activeNotes.forEach((note) => {
