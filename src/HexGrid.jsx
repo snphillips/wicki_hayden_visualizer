@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react"
 import { defineHex, Grid, rectangle, hexToPoint } from "honeycomb-grid"
 import { SVG } from "@svgdotjs/svg.js"
 import midiToNote from "./midiToNote.js"
-import { hexToMidiNote, MidiNoteToHex } from "./midiToHex"
+import { hexToMidiNote, MidiNoteToHex } from "./midiToHex.js"
 
 // Color literals extracted to constants
 const HEX_FILL_COLOR = "#f2f2f2"
