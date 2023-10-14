@@ -1,4 +1,3 @@
-
 // TypeScript's built-in type definitions for the navigator object
 // do not include the requestMIDIAccess property, which is a part of
 // the Web MIDI API. The Web MIDI API isn't universally supported in
@@ -13,7 +12,5 @@ interface Navigator {
 export type MIDIMessageType = [
   status: 128 | 144, // Note On === 144, Note Off === 128
   note: number, // A number between 0 and 127.
-  velocity: number // A number between 0 and 127. The higher the number, the stronger the key press.
-]
-
-
+  velocity: number, // A number between 0 and 127. The higher the number, the stronger the key press.
+];
