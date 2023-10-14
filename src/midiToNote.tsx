@@ -1,3 +1,9 @@
+// The MIDI specification technically goes up to G8 (note number 127),
+// but in practice, many instruments and software don't go this high.
+
+// Usage example:
+// console.log(midiToNote[60]) // Outputs: C4
+
 const midiToNote = {
   0: 'C-1',
   1: 'C#-1',
@@ -115,10 +121,6 @@ const midiToNote = {
   113: 'F8',
   114: 'F#8',
   115: 'G8',
-  // The MIDI specification technically goes up to G8 (note number 127), but in practice, many instruments and software don't go this high.
 };
-
-// Usage example:
-// console.log(midiToNote[60]) // Outputs: C4
 
 export default midiToNote;
