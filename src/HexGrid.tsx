@@ -4,6 +4,7 @@ import { defineHex, Grid, rectangle, hexToPoint } from 'honeycomb-grid'
 import { SVG } from '@svgdotjs/svg.js'
 import midiToNote from './midiToNote.js'
 import { hexToMidiNote, MidiNoteToHex } from './midiToHex.js'
+import { Hex } from 'honeycomb-grid'
 
 // Color literals extracted to constants
 const HEX_FILL_COLOR = '#f2f2f2'
@@ -23,10 +24,11 @@ const HexGrid = ({
 	setPrevActiveNotes 
 }: Props) => {
 	console.log('activeNotes:', activeNotes)
-    const svgRef: any = useRef(null)
+    const svgRef: React.RefObject<HTMLDivElement> = useRef(null);
     const gridRef: any = useRef() // Use useRef to persist grid across re-renders
     const drawRef: any = useRef() // Use useRef to persist draw across re-renders
-    function renderSVG(hex: any) {
+    function renderSVG(hex: Hex) {
+			console.log('hex:', hex)
         const midiNote = hexToMidiNote(hex)
         const noteName = midiToNote[Number(midiNote)]
         // Create a polygon from a hex's corner points and add it to the existing SVG canvas
@@ -46,16 +48,19 @@ const HexGrid = ({
             .stroke({ color: HEX_STROKE_COLOR })
     }
 
-    useEffect(() => {
-			// Create the SVG canvas once
-			drawRef.current = SVG().addTo(svgRef.current).size('100%', '100%')
-
-			// Define the hex with the origin set to 'topLeft' for rendering purposes
-			const Hex = defineHex({ dimensions: 50, origin: { x: -100, y: -100 } })
-			gridRef.current = new Grid(Hex, rectangle({ width: 9, height: 9 }))
-
-			gridRef.current.forEach(renderSVG)
-    }, [])
+		useEffect(() => {
+			if (svgRef.current) {
+					// Create the SVG canvas once
+					drawRef.current = SVG().addTo(svgRef.current).size('100%', '100%');
+	
+					// Define the hex with the origin set to 'topLeft' for rendering purposes
+					const Hex = defineHex({ dimensions: 50, origin: { x: -100, y: -100 } });
+					gridRef.current = new Grid(Hex, rectangle({ width: 9, height: 9 }));
+	
+					gridRef.current.forEach(renderSVG);
+			}
+	}, []);
+	
 
     useEffect(() => {
         // Update hexagons corresponding to currently active notes

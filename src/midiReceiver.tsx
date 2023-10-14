@@ -19,7 +19,8 @@ const MidiReceiver = ({ onMIDIMessage }) => {
             console.log('WebMIDI is not supported in this browser.')
         }
 
-        function onMIDISuccess(midiAccess: any) {
+        function onMIDISuccess(midiAccess: MIDIAccess) {
+            console.log('midiAccess:', midiAccess)
             const inputs = midiAccess.inputs.values()
             for (
                 let input = inputs.next();
@@ -30,17 +31,21 @@ const MidiReceiver = ({ onMIDIMessage }) => {
             }
         }
 
-        function onMIDIFailure(error: any) {
+        function onMIDIFailure(error: Error) {
             console.error('Could not access your MIDI devices.', error)
         }
 
-        function handleMIDIMessage(message: any) {
-            let [status, note, velocity] = message.data
-            if (note) {
-                onMIDIMessage(message.data)
-                // console.log(`status: ${status}, note: ${note },  velocity: ${velocity}`)
+        function handleMIDIMessage(this: MIDIInput, event: Event) {
+            if ("data" in event) {
+                const messageEvent = event as MIDIMessageEvent;
+                let [status, note, velocity] = messageEvent.data;
+                if (note) {
+                    onMIDIMessage(messageEvent.data);
+                    // console.log(`status: ${status}, note: ${note },  velocity: ${velocity}`)
+                }
             }
         }
+        
     }, [onMIDIMessage])
 
     return (
