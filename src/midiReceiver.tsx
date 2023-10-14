@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { MIDIMessageType }  from './types'
 
-const MidiInstrument = ({ onMIDIMessage }: any) => {
+type Props = {
+	onMIDIMessage: (MIDImessage: MIDIMessageType) => void,
+}
+
+const MidiReceiver = ({ onMIDIMessage }) => {
     const [midiSupported, setMidiSupported] = useState<boolean>(false)
-    const [midiMessages, setMidiMessages] = useState([])
+    // const [midiMessages, setMidiMessages] = useState([])
 
     useEffect(() => {
         if (navigator.requestMIDIAccess) {
@@ -39,9 +44,8 @@ const MidiInstrument = ({ onMIDIMessage }: any) => {
     }, [onMIDIMessage])
 
     return (
-        <div>
-        </div>
+        <div className='get-rid-of'></div>
     )
 }
 
-export default MidiInstrument;
+export default MidiReceiver;

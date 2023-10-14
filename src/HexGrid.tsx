@@ -11,7 +11,18 @@ const HEX_STROKE_COLOR = '#b3b3b3'
 const HEX_ACTIVE_FILL_COLOR = '#b3e87d'
 const TEXT_FILL_COLOR = '#000'
 
-const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: any) => {
+type Props = {
+	activeNotes: number[],
+  prevActiveNotes: number[],
+	setPrevActiveNotes: (prevActiveNotes: number[] | ((prev: number[]) => number[])) => void
+}
+
+const HexGrid = ({ 
+	activeNotes,
+	prevActiveNotes,
+	setPrevActiveNotes 
+}: Props) => {
+	console.log('activeNotes:', activeNotes)
     const svgRef: any = useRef(null)
     const gridRef: any = useRef() // Use useRef to persist grid across re-renders
     const drawRef: any = useRef() // Use useRef to persist draw across re-renders
@@ -48,7 +59,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: any) => {
 
     useEffect(() => {
         // Update hexagons corresponding to currently active notes
-        activeNotes.forEach((note: string) => {
+        activeNotes.forEach((note: number) => {
             const hexes = MidiNoteToHex(note)
             hexes.forEach((hex: string) => {
                 const hexData = hex.split(',')
@@ -62,7 +73,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: any) => {
         })
 
         // Reset hexagons corresponding to previously active notes that are no longer active
-        prevActiveNotes.forEach((note: string) => {
+        prevActiveNotes.forEach((note: number) => {
             if (!activeNotes.includes(note)) {
                 const hexes = MidiNoteToHex(note)
                 hexes.forEach((hex: string) => {
