@@ -6,7 +6,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #D3D3D3; /* This is a light grey color. Adjust the hex value to your preference. */
-
 }
 
 code {
@@ -15,5 +14,17 @@ code {
 }
 
 
-body {
+@media screen and (prefers-color-scheme: dark) {
+  body {
+    background-color: #0e1117;
+  }
+  polygon {
+    fill: #776970;
+    stroke-width: 3;
+    stroke: rgb(179, 179, 179);
+  }
+  text {
+    fill: rgb(226, 224, 224);
+    stroke: rgb(226, 224, 224);
+  }
 }

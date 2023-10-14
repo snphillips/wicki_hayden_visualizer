@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react';
 
-const MidiInstrument = ({ onMIDIMessage }) => {
-    const [midiSupported, setMidiSupported] = useState(false)
+const MidiInstrument = ({ onMIDIMessage }: any) => {
+    const [midiSupported, setMidiSupported] = useState<boolean>(false)
     const [midiMessages, setMidiMessages] = useState([])
 
     useEffect(() => {
@@ -11,10 +11,10 @@ const MidiInstrument = ({ onMIDIMessage }) => {
                 .requestMIDIAccess({ sysex: true })
                 .then(onMIDISuccess, onMIDIFailure)
         } else {
-            console.log("WebMIDI is not supported in this browser.")
+            console.log('WebMIDI is not supported in this browser.')
         }
 
-        function onMIDISuccess(midiAccess) {
+        function onMIDISuccess(midiAccess: any) {
             const inputs = midiAccess.inputs.values()
             for (
                 let input = inputs.next();
@@ -25,11 +25,11 @@ const MidiInstrument = ({ onMIDIMessage }) => {
             }
         }
 
-        function onMIDIFailure(error) {
-            console.error("Could not access your MIDI devices.", error)
+        function onMIDIFailure(error: any) {
+            console.error('Could not access your MIDI devices.', error)
         }
 
-        function handleMIDIMessage(message) {
+        function handleMIDIMessage(message: any) {
             let [status, note, velocity] = message.data
             if (note) {
                 onMIDIMessage(message.data)
@@ -44,4 +44,4 @@ const MidiInstrument = ({ onMIDIMessage }) => {
     )
 }
 
-export default MidiInstrument
+export default MidiInstrument;

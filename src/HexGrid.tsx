@@ -11,11 +11,11 @@ const HEX_STROKE_COLOR = "#b3b3b3"
 const HEX_ACTIVE_FILL_COLOR = "#b3e87d"
 const TEXT_FILL_COLOR = "#000"
 
-const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }) => {
-    const svgRef = useRef(null)
-    const gridRef = useRef() // Use useRef to persist grid across re-renders
-    const drawRef = useRef() // Use useRef to persist draw across re-renders
-    function renderSVG(hex) {
+const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: any) => {
+    const svgRef: any = useRef(null)
+    const gridRef: any = useRef() // Use useRef to persist grid across re-renders
+    const drawRef: any = useRef() // Use useRef to persist draw across re-renders
+    function renderSVG(hex: any) {
         const midiNote = hexToMidiNote(hex)
         const noteName = midiToNote[Number(midiNote)]
         // Create a polygon from a hex's corner points and add it to the existing SVG canvas
@@ -50,9 +50,9 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }) => {
 
     useEffect(() => {
         // Update hexagons corresponding to currently active notes
-        activeNotes.forEach((note) => {
+        activeNotes.forEach((note: any) => {
             const hexes = MidiNoteToHex(note)
-            hexes.forEach((hex) => {
+            hexes.forEach((hex: any) => {
                 const hexData = hex.split(",")
                 const hexPolygon = drawRef.current.find(
                     `polygon[data-row="${hexData[1]}"][data-col="${hexData[0]}"]`
@@ -64,10 +64,10 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }) => {
         })
 
         // Reset hexagons corresponding to previously active notes that are no longer active
-        prevActiveNotes.forEach((note) => {
+        prevActiveNotes.forEach((note: any) => {
             if (!activeNotes.includes(note)) {
                 const hexes = MidiNoteToHex(note)
-                hexes.forEach((hex) => {
+                hexes.forEach((hex: any) => {
                     const hexData = hex.split(",")
                     const hexPolygon = drawRef.current.find(
                         `polygon[data-row="${hexData[1]}"][data-col="${hexData[0]}"]`
