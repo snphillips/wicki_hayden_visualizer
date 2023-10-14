@@ -79,7 +79,7 @@ const midiToHex = {
 
 // swap the keys and values of this literal
 // Map object, each midi note can have many hexkeys
-const litteralMap = {
+const literalMap = {
     "0,0": 66,
     "0,1": 61,
     "0,2": 54,
@@ -210,10 +210,10 @@ const generateHexToMidiMapping = (width, height) => {
     return mapping
 }
 
-function swapKeysAndValues(litteralMap: Record<string, string>): Record<string, string[]> {
+function swapKeysAndValues(literalMap: Record<string, string>): Record<string, string[]> {
     const swappedMap: Record<string, string[]> = {}
 
-    for (const [hexKey, midiNote] of Object.entries(litteralMap)) {
+    for (const [hexKey, midiNote] of Object.entries(literalMap)) {
         if (!swappedMap[midiNote]) {
             swappedMap[midiNote] = []
         }
@@ -237,7 +237,7 @@ const hexToMidiNote = (hex) => {
     const colOffset = hex.col - 4
     const rowOffset = hex.row - 4
 
-    return litteralMap[`${hex.col},${hex.row}`] + 12
+    return literalMap[`${hex.col},${hex.row}`] + 12
 }
 
 export { hexToMidiNote, MidiNoteToHex }

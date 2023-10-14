@@ -20,17 +20,23 @@ A web-based visualizer that maps MIDI notes to a hexagonal grid layout, inspired
 ## Installation
 
 1. Clone the repository:
-git clone https://github.com/your-username/midi-hex-visualizer.git
+   git clone https://github.com/your-username/midi-hex-visualizer.git
 
 2. Navigate to the project directory:
+
+```
 cd midi-hex-visualizer
+```
 
 3. Install the required dependencies:
 
+```
 npm install
+```
 
+```
 npm start
-
+```
 
 ## Usage
 
