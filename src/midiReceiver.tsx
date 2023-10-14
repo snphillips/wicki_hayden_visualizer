@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { MIDIMessageType } from './types';
+import { MIDIMessageType } from '../types';
 
 type Props = {
-  onMIDIMessage: (MIDImessage: MIDIMessageType) => void;
+  onMIDIMessage: (argument: MIDIMessageType) => void;
 };
 
-const MidiReceiver = ({ onMIDIMessage }) => {
+const MidiReceiver = ({ onMIDIMessage }: Props) => {
   const [midiSupported, setMidiSupported] = useState<boolean>(false);
   // const [midiMessages, setMidiMessages] = useState([])
 
@@ -32,16 +32,16 @@ const MidiReceiver = ({ onMIDIMessage }) => {
     function handleMIDIMessage(this: MIDIInput, event: Event) {
       if ('data' in event) {
         const messageEvent = event as MIDIMessageEvent;
-        let [status, note, velocity] = messageEvent.data;
+        const [status, note, velocity] = Array.from(messageEvent.data);
         if (note) {
-          onMIDIMessage(messageEvent.data);
-          // console.log(`status: ${status}, note: ${note },  velocity: ${velocity}`)
+          onMIDIMessage([status as 128 | 144, note, velocity]);
+          console.log(`status: ${status}, note: ${note},  velocity: ${velocity}`);
         }
       }
     }
   }, [onMIDIMessage]);
 
-  return <div className="get-rid-of"></div>;
+  return <div>{midiSupported ? '' : <p>MIDI is not supported.</p>}</div>;
 };
 
 export default MidiReceiver;

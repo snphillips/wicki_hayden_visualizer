@@ -1,9 +1,9 @@
 // latest App.js
 import React, { useState } from 'react';
-import MidiReceiver from './midiReceiver.js';
+import MidiReceiver from './midiReceiver';
 
 import HexGrid from './HexGrid';
-import { MIDIMessageType } from './types';
+import { MIDIMessageType } from '../types.ts';
 
 const App = () => {
   const [activeNotes, setActiveNotes] = useState<number[]>([]);
@@ -13,7 +13,7 @@ const App = () => {
     const noteOn = 144;
     const noteOff = 128;
     console.log('MIDImessage:', MIDImessage);
-    let [status, note, velocity] = MIDImessage;
+    const [status, note, velocity] = MIDImessage;
     // console.log(`status:${status}, note: ${note },  velocity: ${velocity}`)
     // Handle note on
     if (status === noteOn && velocity > 0) {

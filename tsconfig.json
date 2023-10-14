@@ -16,13 +16,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true
   },
-  "include": [
-    "src/**/*",
-    "types.d.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "types/**/*.d.ts", "globals.d.ts", "types.ts"],
+  "exclude": ["node_modules"],
+  "types": ["webmidi"]
 }

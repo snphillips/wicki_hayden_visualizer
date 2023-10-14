@@ -6,6 +6,7 @@
 // Here we extend the Navigator type to include this method.
 
 interface Navigator {
+  // eslint-disable-next-line no-unused-vars
   requestMIDIAccess(options?: { sysex: boolean }): Promise<any>;
 }
 
