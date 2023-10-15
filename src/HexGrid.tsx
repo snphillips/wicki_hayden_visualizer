@@ -1,4 +1,3 @@
-// latest HexGrid.js
 import React, { useEffect, useRef } from 'react';
 import { defineHex, Grid, rectangle, hexToPoint, Hex } from 'honeycomb-grid';
 import { SVG } from '@svgdotjs/svg.js';
@@ -46,6 +45,8 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
   }
 
   useEffect(() => {
+    // TODO: gridRef.current.forEach(renderSVG);
+    // is causing crash
     if (svgRef.current) {
       // Create the SVG canvas once
       drawRef.current = SVG().addTo(svgRef.current).size('100%', '100%');
@@ -59,29 +60,47 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
   }, []);
 
   useEffect(() => {
+    console.log('😎 HexGrid useEffect');
+    // Runs on every render
     // Update hexagons corresponding to currently active notes
     activeNotes.forEach((note: number) => {
       const hexes = MidiNoteToHex(note);
-      hexes.forEach((hex: string) => {
-        const hexData = hex.split(',');
-        const hexPolygon = drawRef.current.find(`polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`);
-        if (hexPolygon) {
-          hexPolygon.fill(HEX_ACTIVE_FILL_COLOR);
-        }
-      });
+      if (!hexes) {
+        console.log('🤡 out of bounds');
+        return;
+      } else {
+        hexes.forEach((hex: string) => {
+          const hexData = hex.split(',');
+          const hexPolygon = drawRef.current.find(
+            `polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`,
+          );
+          if (hexPolygon) {
+            hexPolygon.fill(HEX_ACTIVE_FILL_COLOR);
+          } else {
+            console.log('Not found - out of bounds?');
+          }
+        });
+      }
     });
 
     // Reset hexagons corresponding to previously active notes that are no longer active
     prevActiveNotes.forEach((note: number) => {
       if (!activeNotes.includes(note)) {
         const hexes = MidiNoteToHex(note);
-        hexes.forEach((hex: string) => {
-          const hexData = hex.split(',');
-          const hexPolygon = drawRef.current.find(`polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`);
-          if (hexPolygon) {
-            hexPolygon.fill(HEX_FILL_COLOR);
-          }
-        });
+        if (!hexes) {
+          console.log('🤡 out of bounds');
+          return;
+        } else {
+          hexes.forEach((hex: string) => {
+            const hexData = hex.split(',');
+            const hexPolygon = drawRef.current.find(
+              `polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`,
+            );
+            if (hexPolygon) {
+              hexPolygon.fill(HEX_FILL_COLOR);
+            }
+          });
+        }
       }
     });
 
