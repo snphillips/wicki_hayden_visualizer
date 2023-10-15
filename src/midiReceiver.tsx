@@ -7,7 +7,6 @@ type Props = {
 
 const MidiReceiver = ({ onMIDIMessage }: Props) => {
   const [midiSupported, setMidiSupported] = useState<boolean>(false);
-  // const [midiMessages, setMidiMessages] = useState([])
 
   useEffect(() => {
     if (navigator.requestMIDIAccess) {

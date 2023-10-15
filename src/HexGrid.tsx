@@ -1,16 +1,15 @@
 // latest HexGrid.js
 import React, { useEffect, useRef } from 'react';
-import { defineHex, Grid, rectangle, hexToPoint } from 'honeycomb-grid';
+import { defineHex, Grid, rectangle, hexToPoint, Hex } from 'honeycomb-grid';
 import { SVG } from '@svgdotjs/svg.js';
-import midiToNote from './midiToNote.js';
-import { hexToMidiNote, MidiNoteToHex } from './midiToHex.js';
-import { Hex } from 'honeycomb-grid';
+import midiToNote from './midiToNote';
+import { hexToMidiNote, MidiNoteToHex } from './midiToHex';
 
 // Color literals extracted to constants
-const HEX_FILL_COLOR = '#f2f2f2';
-const HEX_STROKE_COLOR = '#b3b3b3';
-const HEX_ACTIVE_FILL_COLOR = '#b3e87d';
-const TEXT_FILL_COLOR = '#000';
+const HEX_FILL_COLOR = '#f2f2f2'; // light gray
+const HEX_STROKE_COLOR = '#b3b3b3'; // gray
+const HEX_ACTIVE_FILL_COLOR = '#b3e87d'; // lime green
+const TEXT_FILL_COLOR = '#000'; // black
 
 type Props = {
   activeNotes: number[];
@@ -23,11 +22,14 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
   const svgRef: React.RefObject<HTMLDivElement> = useRef(null);
   const gridRef: any = useRef(); // Use useRef to persist grid across re-renders
   const drawRef: any = useRef(); // Use useRef to persist draw across re-renders
+
+  // Draw the SVG
   function renderSVG(hex: Hex) {
     const midiNote = hexToMidiNote(hex);
     const noteName = midiToNote[Number(midiNote)];
     // Create a polygon from a hex's corner points and add it to the existing SVG canvas
-    const hexPolygon = drawRef.current
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _hexPolygon = drawRef.current
       .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
       .fill(HEX_FILL_COLOR)
       .stroke({ width: 3, color: HEX_STROKE_COLOR })
