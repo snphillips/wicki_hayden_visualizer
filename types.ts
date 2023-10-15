@@ -5,9 +5,8 @@
 
 // Here we extend the Navigator type to include this method.
 
-interface Navigator {
-  // eslint-disable-next-line no-unused-vars
-  requestMIDIAccess(options?: { sysex: boolean }): Promise<any>;
+export interface Navigator {
+  requestMIDIAccess(options?: any): Promise<any>;
 }
 
 export type MIDIMessageType = [

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import MidiReceiver from './midiReceiver';
 
 import HexGrid from './HexGrid';
-import { MIDIMessageType } from '../types.ts';
+import { MIDIMessageType } from '../types';
 
 const App = () => {
   const [activeNotes, setActiveNotes] = useState<number[]>([]);

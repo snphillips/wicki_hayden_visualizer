@@ -1,4 +1,4 @@
-import { defineHex, Grid, rectangle, hexToPoint, fromCoordinates } from 'honeycomb-grid';
+// import { defineHex, Grid, rectangle, hexToPoint, fromCoordinates } from 'honeycomb-grid';
 
 const midiToHex = {
   13: ['0,9'],
@@ -176,46 +176,46 @@ const literalMap = {
   '9,9': 31,
 };
 
-const generateHexToMidiMapping = (width: number, height: number) => {
-  const mapping = {};
-  for (let col = 0; col < width; col++) {
-    for (let row = 0; row < height; row++) {
-      if (row % 2 === 0) {
-        // even row
-        if (col === 0 && row === 0) {
-          mapping[`${col},${row}`] = 66;
-        } else if (col === 0) {
-          mapping[`${col},${row}`] = mapping[`0,${row - 2}`] - 12;
-        } else {
-          mapping[`${col},${row}`] = mapping[`${col - 1},${row}`] + 2;
-        }
-      } else {
-        // odd row
-        if (col === 0 && row === 1) {
-          mapping[`${col},${row}`] = 61;
-        } else if (col === 0) {
-          mapping[`${col},${row}`] = mapping[`0,${row - 2}`] - 12;
-        } else {
-          mapping[`${col},${row}`] = mapping[`${col - 1},${row}`] + 2;
-        }
-      }
-    }
-  }
-  return mapping;
-};
+// const generateHexToMidiMapping = (width: number, height: number) => {
+//   const mapping = {};
+//   for (let col = 0; col < width; col++) {
+//     for (let row = 0; row < height; row++) {
+//       if (row % 2 === 0) {
+//         // even row
+//         if (col === 0 && row === 0) {
+//           mapping[`${col},${row}`] = 66;
+//         } else if (col === 0) {
+//           mapping[`${col},${row}`] = mapping[`0,${row - 2}`] - 12;
+//         } else {
+//           mapping[`${col},${row}`] = mapping[`${col - 1},${row}`] + 2;
+//         }
+//       } else {
+//         // odd row
+//         if (col === 0 && row === 1) {
+//           mapping[`${col},${row}`] = 61;
+//         } else if (col === 0) {
+//           mapping[`${col},${row}`] = mapping[`0,${row - 2}`] - 12;
+//         } else {
+//           mapping[`${col},${row}`] = mapping[`${col - 1},${row}`] + 2;
+//         }
+//       }
+//     }
+//   }
+//   return mapping;
+// };
 
-function swapKeysAndValues(literalMap: Record<string, string>): Record<string, string[]> {
-  const swappedMap: Record<string, string[]> = {};
+// function swapKeysAndValues(literalMap: Record<string, string>): Record<string, string[]> {
+//   const swappedMap: Record<string, string[]> = {};
 
-  for (const [hexKey, midiNote] of Object.entries(literalMap)) {
-    if (!swappedMap[midiNote]) {
-      swappedMap[midiNote] = [];
-    }
-    swappedMap[midiNote].push(hexKey);
-  }
+//   for (const [hexKey, midiNote] of Object.entries(literalMap)) {
+//     if (!swappedMap[midiNote]) {
+//       swappedMap[midiNote] = [];
+//     }
+//     swappedMap[midiNote].push(hexKey);
+//   }
 
-  return swappedMap;
-}
+//   return swappedMap;
+// }
 
 const MidiNoteToHex = (note) => {
   const hexes = midiToHex[note - 12];
@@ -227,8 +227,9 @@ const hexToMidiNote = (hex) => {
   // Assuming middle D (MIDI note number 50) is at { col: 4, row: 4 }
 
   // Calculate the offsets from the center hex
-  const colOffset = hex.col - 4;
-  const rowOffset = hex.row - 4;
+  // const colOffset = hex.col - 4;
+  // const rowOffset = hex.row - 4;
+  console.log('literalMap[`${hex.col},${hex.row}`] + 12:', literalMap[`${hex.col},${hex.row}`] + 12);
 
   return literalMap[`${hex.col},${hex.row}`] + 12;
 };
