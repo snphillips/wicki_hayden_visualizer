@@ -62,7 +62,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
     // Update hexagons corresponding to currently active notes
     activeNotes.forEach((note: number) => {
       const hexes = MidiNoteToHex(note);
-      // If note is out of bounds, do nothing
+      // If note is out of bounds(too high or too low), do nothing
       if (!hexes) {
         return;
       } else {
@@ -81,7 +81,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
     prevActiveNotes.forEach((note: number) => {
       if (!activeNotes.includes(note)) {
         const hexes = MidiNoteToHex(note);
-        // If note is out of bounds, do nothing
+        // If note is out of bounds(too high or too low), do nothing
         if (!hexes) {
           return;
         } else {
