@@ -9,6 +9,16 @@ const HEX_FILL_COLOR = '#f2f2f2'; // light gray
 const HEX_STROKE_COLOR = '#b3b3b3'; // gray
 const HEX_ACTIVE_FILL_COLOR = '#b3e87d'; // lime green
 const TEXT_FILL_COLOR = '#000'; // black
+const HEX_STROKE_WIDTH = 3;
+const TEXT_FONT_SIZE = 14;
+const TEXT_VERTICAL_OFFSET = 8;
+const CELL_SIZE = 50;
+const NUM_TILES_X_AXIS = 9;
+const NUM_TILES_Y_AXIS = 9;
+const TOP_MARGIN = -100;
+const LEFT_MARGIN = -100;
+const GRID_WIDTH = '100%';
+const GRID_HEIGHT = '750px';
 
 type Props = {
   activeNotes: number[];
@@ -31,7 +41,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
     const _hexPolygon = drawRef.current
       .polygon(hex.corners.map(({ x, y }) => `${x},${y}`))
       .fill(HEX_FILL_COLOR)
-      .stroke({ width: 3, color: HEX_STROKE_COLOR })
+      .stroke({ width: HEX_STROKE_WIDTH, color: HEX_STROKE_COLOR })
       .data('row', hex.row) // Add data-row attribute
       .data('col', hex.col); // Add data-col attribute
 
@@ -39,8 +49,8 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
     const center = hexToPoint(hex);
     drawRef.current
       .text(`${noteName}`)
-      .move(center.x, center.y - 8)
-      .font({ anchor: 'middle', size: 14, fill: TEXT_FILL_COLOR })
+      .move(center.x, center.y - TEXT_VERTICAL_OFFSET)
+      .font({ anchor: 'middle', size: TEXT_FONT_SIZE, fill: TEXT_FILL_COLOR })
       .stroke({ color: HEX_STROKE_COLOR });
   }
 
@@ -50,8 +60,8 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
       drawRef.current = SVG().addTo(svgRef.current).size('100%', '100%');
 
       // Define the hex with the origin set to 'topLeft' for rendering purposes
-      const Hex = defineHex({ dimensions: 50, origin: { x: -100, y: -100 } });
-      gridRef.current = new Grid(Hex, rectangle({ width: 9, height: 9 }));
+      const Hex = defineHex({ dimensions: CELL_SIZE, origin: { x: LEFT_MARGIN, y: TOP_MARGIN } });
+      gridRef.current = new Grid(Hex, rectangle({ width: NUM_TILES_X_AXIS, height: NUM_TILES_Y_AXIS }));
 
       gridRef.current.forEach(renderSVG);
     }
@@ -104,10 +114,9 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
     <div
       id="hex-grid"
       ref={svgRef}
-      // TODO: styles move these to css files to make responsive
       style={{
-        width: '1300px',
-        height: '1200px',
+        width: GRID_WIDTH,
+        height: GRID_HEIGHT,
         margin: '0 auto',
       }}
     />
