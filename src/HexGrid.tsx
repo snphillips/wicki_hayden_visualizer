@@ -45,8 +45,6 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
   }
 
   useEffect(() => {
-    // TODO: gridRef.current.forEach(renderSVG);
-    // is causing crash
     if (svgRef.current) {
       // Create the SVG canvas once
       drawRef.current = SVG().addTo(svgRef.current).size('100%', '100%');
@@ -59,14 +57,13 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
     }
   }, []);
 
+  // Runs on every render
   useEffect(() => {
-    console.log('😎 HexGrid useEffect');
-    // Runs on every render
     // Update hexagons corresponding to currently active notes
     activeNotes.forEach((note: number) => {
       const hexes = MidiNoteToHex(note);
+      // If note is out of bounds, do nothing
       if (!hexes) {
-        console.log('🤡 out of bounds');
         return;
       } else {
         hexes.forEach((hex: string) => {
@@ -74,21 +71,18 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
           const hexPolygon = drawRef.current.find(
             `polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`,
           );
-          if (hexPolygon) {
-            hexPolygon.fill(HEX_ACTIVE_FILL_COLOR);
-          } else {
-            console.log('Not found - out of bounds?');
-          }
+          hexPolygon.fill(HEX_ACTIVE_FILL_COLOR);
         });
       }
     });
 
     // Reset hexagons corresponding to previously active notes that are no longer active
+    // If it was on, and now it's not, turn it off
     prevActiveNotes.forEach((note: number) => {
       if (!activeNotes.includes(note)) {
         const hexes = MidiNoteToHex(note);
+        // If note is out of bounds, do nothing
         if (!hexes) {
-          console.log('🤡 out of bounds');
           return;
         } else {
           hexes.forEach((hex: string) => {
@@ -96,9 +90,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
             const hexPolygon = drawRef.current.find(
               `polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`,
             );
-            if (hexPolygon) {
-              hexPolygon.fill(HEX_FILL_COLOR);
-            }
+            hexPolygon.fill(HEX_FILL_COLOR);
           });
         }
       }
@@ -106,7 +98,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
 
     // Update the previous active notes state
     setPrevActiveNotes(activeNotes);
-  }, [activeNotes]);
+  }, [activeNotes, setPrevActiveNotes, prevActiveNotes]);
 
   return (
     <div
