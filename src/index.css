@@ -1,14 +1,41 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #d3d3d3; /* This is a light grey color. Adjust the hex value to your preference. */
+  background-color: #d3d3d3;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+#app {
+  display: flex;
+  flex-direction: row;
+}
+
+#hex-grid {
+  display: block;
+  width: 100%;
+  height: 750px;
+  margin: 0 auto;
+}
+
+#instructions {
+  display: block;
+  width: auto;
+  padding: 1rem;
+}
+
+h1 {
+  font-size: large;
+}
+
+p {
+  font-size: medium;
+}
+
+button {
+  display: block;
+  margin-top: 1rem;
 }
 
 /*  

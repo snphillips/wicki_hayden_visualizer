@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import HexGrid from './HexGrid';
+import Instructions from './Instructions';
 import { MIDIMessageType } from '../types';
 
 const App = () => {
@@ -25,10 +26,10 @@ const App = () => {
     function handleMIDIMessage(this: any, event: Event) {
       if ('data' in event) {
         const messageEvent = event as MessageEvent;
-        const [status, note, velocity] = Array.from(messageEvent.data) as [number, number, number];
+        const [status, note, velocity] = Array.from(messageEvent.data) as [128 | 144, number, number];
 
         if (note) {
-          onMIDIMessage([status as 128 | 144, note, velocity]);
+          onMIDIMessage([status, note, velocity]);
           console.log(`status: ${status}, note: ${note},  velocity: ${velocity}`);
         }
       }
@@ -58,7 +59,7 @@ const App = () => {
   };
 
   return (
-    <div className="app">
+    <div id="app">
       {!midiSupported ? (
         <p className="not-supported-message">MIDI is not supported on this device.</p>
       ) : (
@@ -68,6 +69,18 @@ const App = () => {
           setPrevActiveNotes={setPrevActiveNotes}
         />
       )}
+      <Instructions />
+      {/* <div id="app-instructions">
+        <h1>Wicki Hayden Visualizer</h1>
+        <p>This app visualizes MIDI signals onto a Wicki Hayden note layout.</p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ac sem nisi. Proin in tincidunt
+          nisl. Morbi sed augue nisl. Mauris vehicula lectus velit, eget volutpat dolor congue auctor. Mauris
+          at felis ac libero efficitur volutpat.
+        </p>
+        <button>Learn more about Wicki-Hayden Note Layout</button>
+        <button>Visit project github page</button>
+      </div> */}
     </div>
   );
 };

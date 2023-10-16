@@ -114,11 +114,13 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
     <div
       id="hex-grid"
       ref={svgRef}
-      style={{
-        width: GRID_WIDTH,
-        height: GRID_HEIGHT,
-        margin: '0 auto',
-      }}
+      style={
+        {
+          // width: GRID_WIDTH,
+          // height: GRID_HEIGHT,
+          // margin: '0 auto',
+        }
+      }
     />
   );
 };
