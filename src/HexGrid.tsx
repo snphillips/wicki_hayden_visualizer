@@ -19,8 +19,10 @@ type Props = {
 const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) => {
   console.log('activeNotes:', activeNotes);
   const svgRef: React.RefObject<HTMLDivElement> = useRef(null);
-  const gridRef: any = useRef(); // Use useRef to persist grid across re-renders
-  const drawRef: any = useRef(); // Use useRef to persist draw across re-renders
+  const gridRef = useRef<Grid<Hex> | undefined>(); // Use useRef to persist grid across re-renders
+  const drawRef = useRef<any>(); // Use useRef to persist draw across re-renders
+  console.log('gridRef', gridRef);
+  console.log('drawRef', drawRef);
 
   // Draw the SVG
   function renderSVG(hex: Hex) {
