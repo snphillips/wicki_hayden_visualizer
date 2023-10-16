@@ -1,4 +1,3 @@
-// latest HexGrid.js
 import React, { useEffect, useRef } from 'react';
 import { defineHex, Grid, rectangle, hexToPoint, Hex } from 'honeycomb-grid';
 import { SVG } from '@svgdotjs/svg.js';
@@ -20,8 +19,8 @@ type Props = {
 const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) => {
   console.log('activeNotes:', activeNotes);
   const svgRef: React.RefObject<HTMLDivElement> = useRef(null);
-  const gridRef: any = useRef(); // Use useRef to persist grid across re-renders
-  const drawRef: any = useRef(); // Use useRef to persist draw across re-renders
+  const gridRef = useRef<Grid<Hex> | undefined>(); // Use useRef to persist grid across re-renders
+  const drawRef = useRef<any>(); // Use useRef to persist draw across re-renders
 
   // Draw the SVG
   function renderSVG(hex: Hex) {
@@ -58,36 +57,48 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
     }
   }, []);
 
+  // Runs on every render
   useEffect(() => {
     // Update hexagons corresponding to currently active notes
     activeNotes.forEach((note: number) => {
       const hexes = MidiNoteToHex(note);
-      hexes.forEach((hex: string) => {
-        const hexData = hex.split(',');
-        const hexPolygon = drawRef.current.find(`polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`);
-        if (hexPolygon) {
+      // If note is out of bounds(too high or too low), do nothing
+      if (!hexes) {
+        return;
+      } else {
+        hexes.forEach((hex: string) => {
+          const hexData = hex.split(',');
+          const hexPolygon = drawRef.current.find(
+            `polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`,
+          );
           hexPolygon.fill(HEX_ACTIVE_FILL_COLOR);
-        }
-      });
+        });
+      }
     });
 
     // Reset hexagons corresponding to previously active notes that are no longer active
+    // If it was on, and now it's not, turn it off
     prevActiveNotes.forEach((note: number) => {
       if (!activeNotes.includes(note)) {
         const hexes = MidiNoteToHex(note);
-        hexes.forEach((hex: string) => {
-          const hexData = hex.split(',');
-          const hexPolygon = drawRef.current.find(`polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`);
-          if (hexPolygon) {
+        // If note is out of bounds(too high or too low), do nothing
+        if (!hexes) {
+          return;
+        } else {
+          hexes.forEach((hex: string) => {
+            const hexData = hex.split(',');
+            const hexPolygon = drawRef.current.find(
+              `polygon[data-row='${hexData[1]}'][data-col='${hexData[0]}']`,
+            );
             hexPolygon.fill(HEX_FILL_COLOR);
-          }
-        });
+          });
+        }
       }
     });
 
     // Update the previous active notes state
     setPrevActiveNotes(activeNotes);
-  }, [activeNotes]);
+  }, [activeNotes, setPrevActiveNotes, prevActiveNotes]);
 
   return (
     <div
