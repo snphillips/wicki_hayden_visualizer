@@ -10,19 +10,20 @@ body {
 #app {
   display: flex;
   flex-direction: row;
+  align-items: flex-start; /* Align items to the top of the container */
 }
 
 #hex-grid {
-  display: block;
-  width: 100%;
-  height: 750px;
-  margin: 0 auto;
+  flex-shrink: 0; /* Prevent shrinking */
+  min-width: 56rem; /* Minimum width for HexGrid */
+  height: 50rem;
 }
 
 #instructions {
-  display: block;
+  max-width: 20rem;
   width: auto;
   padding: 1rem;
+  flex-grow: 1; /* Let it grow to take up remaining space */
 }
 
 h1 {
@@ -38,19 +39,20 @@ button {
   margin-top: 1rem;
 }
 
-/*  
-@media screen and (prefers-color-scheme: dark) {
-  body {
-    background-color: #0e1117;
+/* Media query for screens less than 900px wide */
+@media (max-width: 900px) {
+  #app {
+    flex-direction: column; /* Stack the elements vertically */
   }
-  polygon {
-    fill: #776970;
-    stroke-width: 3;
-    stroke: rgb(179, 179, 179);
+
+  #hex-grid {
+    flex: unset;
+    /* min-width: unset; */
   }
-  text {
-    fill: rgb(226, 224, 224);
-    stroke: rgb(226, 224, 224);
+
+  #instructions {
+    max-width: 40rem;
+    width: auto;
+    padding: 1rem;
   }
 }
-*/

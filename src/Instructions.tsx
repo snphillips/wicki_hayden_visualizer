@@ -8,8 +8,14 @@ const Instructions = () => {
         nisl. Morbi sed augue nisl. Mauris vehicula lectus velit, eget volutpat dolor congue auctor. Mauris at
         felis ac libero efficitur volutpat.
       </p>
-      <button>Learn about Wicki-Hayden Note Layout</button>
-      <button>Visit project github page</button>
+      <button>
+        <a href="https://en.wikipedia.org/wiki/Wicki%E2%80%93Hayden_note_layout">
+          Learn about Wicki-Hayden Note Layout
+        </a>
+      </button>
+      <button>
+        <a href="https://github.com/snphillips/wicki_hayden_visualizer">Visit project github page</a>
+      </button>
     </div>
   );
 };
