@@ -37,8 +37,9 @@ p {
 }
 
 a:-webkit-any-link {
-  font-weight: 600;
+  font-weight: 500;
   font-size: medium;
+  color: unset;
 }
 
 a:-webkit-any-link:hover {
