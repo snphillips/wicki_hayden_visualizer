@@ -1,6 +1,7 @@
 # MIDI Hexagonal Visualizer
 
 A web-based visualizer that maps MIDI notes to a hexagonal grid layout, inspired by the Wicki-Hayden note layout.
+View the deployed app here: https://wicki_hayden_visualizer.surge.sh/
 
 ## Table of Contents
 
