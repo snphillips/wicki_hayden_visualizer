@@ -4,7 +4,7 @@ import { SVG } from '@svgdotjs/svg.js';
 import midiToNote from './midiToNote';
 import { hexToMidiNote, MidiNoteToHex } from './midiToHex';
 
-// Color literals extracted to constants
+// See #hex-grid in index.css for additional styling
 const HEX_FILL_COLOR = '#f2f2f2'; // light gray
 const HEX_STROKE_COLOR = '#b3b3b3'; // gray
 const HEX_ACTIVE_FILL_COLOR = '#b3e87d'; // lime green
@@ -15,10 +15,8 @@ const TEXT_VERTICAL_OFFSET = 8;
 const CELL_SIZE = 50;
 const NUM_TILES_X_AXIS = 9;
 const NUM_TILES_Y_AXIS = 9;
-const TOP_MARGIN = -100;
-const LEFT_MARGIN = -100;
-const GRID_WIDTH = '100%';
-const GRID_HEIGHT = '750px';
+const TOP_MARGIN = -50;
+const LEFT_MARGIN = -45;
 
 type Props = {
   activeNotes: number[];
@@ -110,19 +108,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
     setPrevActiveNotes(activeNotes);
   }, [activeNotes, setPrevActiveNotes, prevActiveNotes]);
 
-  return (
-    <div
-      id="hex-grid"
-      ref={svgRef}
-      style={
-        {
-          // width: GRID_WIDTH,
-          // height: GRID_HEIGHT,
-          // margin: '0 auto',
-        }
-      }
-    />
-  );
+  return <div id="hex-grid" ref={svgRef} />;
 };
 
 export default React.memo(HexGrid);

@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500&family=Young+Serif&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Lato', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #d3d3d3;
@@ -11,18 +13,18 @@ body {
   display: flex;
   flex-direction: row;
   align-items: flex-start; /* Align items to the top of the container */
+  padding: 3rem;
 }
 
 #hex-grid {
   flex-shrink: 0; /* Prevent shrinking */
   min-width: 56rem; /* Minimum width for HexGrid */
-  height: 50rem;
+  height: 46rem;
 }
 
 #instructions {
-  max-width: 20rem;
+  max-width: 30rem;
   width: auto;
-  padding: 1rem;
   flex-grow: 1; /* Let it grow to take up remaining space */
 }
 
@@ -34,13 +36,15 @@ p {
   font-size: medium;
 }
 
-button {
-  display: block;
-  margin-top: 1rem;
+a:-webkit-any-link {
+  font-weight: 600;
+  font-size: medium;
 }
 
+a:-webkit-any-link:hover {
+}
 /* Media query for screens less than 900px wide */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   #app {
     flex-direction: column; /* Stack the elements vertically */
   }

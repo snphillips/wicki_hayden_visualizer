@@ -38,6 +38,12 @@ npm install
 npm start
 ```
 
+Open a browser and visit the url provided by Vite. Something like:
+
+```
+http://127.0.0.1:5175/
+```
+
 ## Usage
 
 1. Connect your MIDI device to your computer.
