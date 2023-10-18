@@ -1,3 +1,5 @@
+import MidiPlayer from 'react-midi-player';
+
 const Instructions = () => {
   return (
     <div id="instructions">
@@ -14,6 +16,8 @@ const Instructions = () => {
       <p>
         <a href="https://github.com/snphillips/wicki_hayden_visualizer">Visit project github page</a>
       </p>
+      <p>Play Demo</p>
+      <MidiPlayer src="../public/The-Entertainer.mid" />
     </div>
   );
 };
