@@ -69,7 +69,6 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
   useEffect(() => {
     // Update hexagons corresponding to currently active notes
     activeNotes.forEach((note: number) => {
-      console.log('note:', note);
       const hexes = MidiNoteToHex(note);
       // If note is out of bounds(too high or too low), do nothing
       if (!hexes) {
