@@ -58,6 +58,6 @@ a:-webkit-any-link:hover {
   #instructions {
     max-width: 40rem;
     width: auto;
-    padding: 1rem;
+    /* padding: 1rem; */
   }
 }

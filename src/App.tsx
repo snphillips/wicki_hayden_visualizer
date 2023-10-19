@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import HexGrid from './HexGrid';
 import Instructions from './Instructions';
+// import MidiPlayerComponent from './MidiPlayerComponent';
 import { MIDIMessageType } from '../types';
 
 const App = () => {
@@ -12,7 +13,7 @@ const App = () => {
   // Runs on first render
   useEffect(() => {
     function onMIDISuccess(midiAccess: WebMidi.MIDIAccess) {
-      console.log('midiAccess:', midiAccess);
+      // console.log('midiAccess:', midiAccess);
       const inputs = midiAccess.inputs.values();
       for (let input = inputs.next(); input && !input.done; input = inputs.next()) {
         input.value.onmidimessage = handleMIDIMessage;
@@ -30,7 +31,7 @@ const App = () => {
 
         if (note) {
           onMIDIMessage([status, note, velocity]);
-          console.log(`status: ${status}, note: ${note},  velocity: ${velocity}`);
+          // console.log(`status: ${status}, note: ${note},  velocity: ${velocity}`);
         }
       }
     }
@@ -46,7 +47,7 @@ const App = () => {
   const onMIDIMessage = (MIDImessage: MIDIMessageType) => {
     const noteOn = 144;
     const noteOff = 128;
-    console.log('MIDImessage:', MIDImessage);
+    // console.log('MIDImessage:', MIDImessage);
     const [status, note, velocity] = MIDImessage;
     // console.log(`status:${status}, note: ${note },  velocity: ${velocity}`)
     // Handle note on
@@ -69,7 +70,10 @@ const App = () => {
           setPrevActiveNotes={setPrevActiveNotes}
         />
       )}
-      <Instructions />
+      <section>
+        <Instructions />
+        {/* <MidiPlayerComponent /> */}
+      </section>
     </div>
   );
 };

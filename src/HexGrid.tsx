@@ -4,20 +4,6 @@ import { SVG } from '@svgdotjs/svg.js';
 import midiToNote from './midiToNote';
 import { hexToMidiNote, MidiNoteToHex } from './midiToHex';
 
-// See #hex-grid in index.css for additional styling
-const HEX_FILL_COLOR = '#f2f2f2'; // light gray
-const HEX_STROKE_COLOR = '#b3b3b3'; // gray
-const HEX_ACTIVE_FILL_COLOR = '#b3e87d'; // lime green
-const TEXT_FILL_COLOR = '#000'; // black
-const HEX_STROKE_WIDTH = 3;
-const TEXT_FONT_SIZE = 14;
-const TEXT_VERTICAL_OFFSET = 8;
-const CELL_SIZE = 50;
-const NUM_TILES_X_AXIS = 9;
-const NUM_TILES_Y_AXIS = 9;
-const TOP_MARGIN = -50;
-const LEFT_MARGIN = -45;
-
 type Props = {
   activeNotes: number[];
   prevActiveNotes: number[];
@@ -25,10 +11,24 @@ type Props = {
 };
 
 const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) => {
-  console.log('activeNotes:', activeNotes);
+  // console.log('activeNotes:', activeNotes);
   const svgRef: React.RefObject<HTMLDivElement> = useRef(null);
   const gridRef = useRef<Grid<Hex> | undefined>(); // Use useRef to persist grid across re-renders
   const drawRef = useRef<any>(); // Use useRef to persist draw across re-renders
+
+  // See #hex-grid in index.css for additional styling
+  const HEX_FILL_COLOR = '#f2f2f2'; // light gray
+  const HEX_STROKE_COLOR = '#b3b3b3'; // gray
+  const HEX_ACTIVE_FILL_COLOR = '#b3e87d'; // lime green
+  const TEXT_FILL_COLOR = '#000'; // black
+  const HEX_STROKE_WIDTH = 3;
+  const TEXT_FONT_SIZE = 14;
+  const TEXT_VERTICAL_OFFSET = 8;
+  const CELL_SIZE = 50;
+  const NUM_TILES_X_AXIS = 9;
+  const NUM_TILES_Y_AXIS = 9;
+  const TOP_MARGIN = -50;
+  const LEFT_MARGIN = -45;
 
   // Draw the SVG
   function renderSVG(hex: Hex) {
@@ -69,6 +69,7 @@ const HexGrid = ({ activeNotes, prevActiveNotes, setPrevActiveNotes }: Props) =>
   useEffect(() => {
     // Update hexagons corresponding to currently active notes
     activeNotes.forEach((note: number) => {
+      console.log('note:', note);
       const hexes = MidiNoteToHex(note);
       // If note is out of bounds(too high or too low), do nothing
       if (!hexes) {

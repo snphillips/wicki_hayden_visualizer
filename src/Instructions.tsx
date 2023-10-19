@@ -1,5 +1,3 @@
-import MidiPlayer from 'react-midi-player';
-
 const Instructions = () => {
   return (
     <div id="instructions">
@@ -10,14 +8,12 @@ const Instructions = () => {
       <p>Stream a MIDI file from a digital audio workstation (DAW), like Ableton.</p>
       <p>
         <a href="https://en.wikipedia.org/wiki/Wicki%E2%80%93Hayden_note_layout">
-          Learn about Wicki-Hayden Note Layout
+          Read about Wicki-Hayden Note Layout
         </a>
       </p>
       <p>
         <a href="https://github.com/snphillips/wicki_hayden_visualizer">Visit project github page</a>
       </p>
-      <p>Play Demo</p>
-      <MidiPlayer src="../public/The-Entertainer.mid" />
     </div>
   );
 };
