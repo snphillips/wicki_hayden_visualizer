@@ -19,6 +19,13 @@
     "jsx": "react-jsx"
     // "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "types/**/*.d.ts", "globals.d.ts", "types.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "types/**/*.d.ts",
+    "globals.d.ts",
+    "types.ts",
+    "src/Midi-Player.jsx"
+  ],
   "exclude": ["node_modules"]
 }
